@@ -79,7 +79,7 @@ const PatientAgenda = () => {
                 fontWeight: 'bold',
                 fontSize: "1.4em"
               }}>{ky}</Divider>
-              {Object.keys(date_obj[ky]).map((km, im) => (
+              {/* {Object.keys(date_obj[ky]).map((km, im) => (
                 <div km={im}>
                   <Divider textAlign="left" sx={{
                   }}><Typography variant="h5" component="h2" display="inline" sx={{ width: 0.6 }}>{monthNames[km - 1]}</Typography></Divider>
@@ -135,7 +135,7 @@ const PatientAgenda = () => {
                     </Card>
                   ))}
                 </div>
-              ))}
+              ))} */}
             </div>
           ))}
         </div>
