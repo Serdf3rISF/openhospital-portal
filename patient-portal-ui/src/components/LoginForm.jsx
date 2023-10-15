@@ -88,7 +88,9 @@ const LoginForm = ({ setAuth, setProfile, setIdPatient }) => {
       // --- end test DB ---
 
       DeafutlAllData.postLogin(values.username, values.password).then((res) => {
-        console.log("response getToken -----test1-------");
+
+        console.log("response getToken ----test--2------");
+
         console.log(res);
         localStorage.setItem("Token", res);
 
