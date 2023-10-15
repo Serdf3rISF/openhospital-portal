@@ -93,31 +93,31 @@ const LoginForm = ({ setAuth, setProfile, setIdPatient }) => {
         localStorage.setItem("Token", res);
 
         // --- start TODO Eliminare
-        // amb = "Patient";
-        // setProfile("Patient");
-        // localStorage.setItem("IdPatient", 1);
-        // setAuth(true);
+        amb = "Patient";
+        setProfile("Patient");
+        localStorage.setItem("IdPatient", 1);
+        setAuth(true);
         // --- end TODO Eliminare
 
         // --- start TODO Decommentare
         
-        console.log(res.roles);
-        if (res.error == "Unauthorized") {
-          setProfile("Unauthorized");
-          amb = "Unauthorized";
-          setAuth(false);
-        } else {
-          if (res.roles[0] == "ROLE_PATIENT") {
-            setProfile("Patient");
-            amb = "Patient";
-            setAuth(true);
-          }
-          if (res.roles[0] == "ROLE_DOCTOR") {
-            setProfile("Doctor");
-            amb = "Doctor";
-            setAuth(true);
-          }
-        }
+        // console.log(res.roles);
+        // if (res.error == "Unauthorized") {
+        //   setProfile("Unauthorized");
+        //   amb = "Unauthorized";
+        //   setAuth(false);
+        // } else {
+        //   if (res.roles[0] == "ROLE_PATIENT") {
+        //     setProfile("Patient");
+        //     amb = "Patient";
+        //     setAuth(true);
+        //   }
+        //   if (res.roles[0] == "ROLE_DOCTOR") {
+        //     setProfile("Doctor");
+        //     amb = "Doctor";
+        //     setAuth(true);
+        //   }
+        // }
         localStorage.setItem("IdPatient", res.patientId);
        
         // --- end TODO Decommentare

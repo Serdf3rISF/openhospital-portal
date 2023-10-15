@@ -46,12 +46,22 @@ class PatientNav extends Component<any> {
         console.log(props);
         this.wrapperRef = React.createRef();
         this.handleClickOutside = this.handleClickOutside.bind(this);
+        this.closePanel = this.closePanel.bind(this);
     }
     componentDidMount() {
         document.addEventListener("mousedown", this.handleClickOutside);
     }
     componentWillUnmount() {
         document.removeEventListener("mousedown", this.handleClickOutside);
+    }
+    closePanel() {
+        console.log("bbb");
+        let el: any = document.getElementById('panel1a-header');
+        let elAE = el.getAttribute('aria-expanded');
+        if (elAE === "true") {
+            el.click();
+        }
+
     }
     // --- Custom Manage click Over Acccordion (TODO) ---
     handleClickOutside(event: { target: any; }) {
@@ -65,8 +75,10 @@ class PatientNav extends Component<any> {
     }
     render() {
         return (
-            <Accordion ref={this.wrapperRef} sx={{ verticalAlign: 'top', top: "0px", width: 1, position: 'absolute', zIndex: 'modal' }}>
-                <AccordionSummary
+            <Accordion
+                style={{ "backgroundColor": "rgba(52,52,52,0.0)", "padding": "0" }}
+                ref={this.wrapperRef} sx={{ verticalAlign: 'top', top: "0px", width: 1, position: 'absolute', zIndex: 'modal' }}>
+                <AccordionSummary  style={{ "backgroundColor": "white" }}
                     aria-controls="panel1a-content"
                     id="panel1a-header"
                 >
@@ -76,7 +88,7 @@ class PatientNav extends Component<any> {
                             minHeight: '82px',
                             width: 1,
                             backgroundColor: 'primary.dark',
-	                        }}>
+                        }}>
                         <Stack direction="row" spacing={2} sx={{
                             width: 1,
                         }}>
@@ -97,8 +109,9 @@ class PatientNav extends Component<any> {
                         </Stack>
                     </Box>
                 </AccordionSummary>
-                <AccordionDetails>
+                <AccordionDetails style={{ "padding": "0em" }} >
                     <Box
+                        style={{ "backgroundColor": "white", "padding": "2em" }}
                         role="presentation"
                     >
                         <Box sx={{
@@ -129,6 +142,9 @@ class PatientNav extends Component<any> {
                                 <Logout />
                             </Box>
                         </List>
+                    </Box>
+                    <Box>
+                        <div onClick={this.closePanel} style={{ "backgroundColor": "rgba(52,52,52,0.0)", "height": "19em" }}></div>
                     </Box>
                 </AccordionDetails>
             </Accordion >
