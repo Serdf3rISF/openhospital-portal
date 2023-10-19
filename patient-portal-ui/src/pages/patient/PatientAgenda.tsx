@@ -73,7 +73,7 @@ const PatientAgenda = () => {
         <PatientSmartNav page={'PatientAgenda'} />
       </Box>
       {loadComponent ? <>
-        <div style={{ width: '100%' }}>
+        {/* <div style={{ width: '100%' }}>
           {Object.keys(date_obj).map((ky, iy) => (
             <div key={iy}>
               <Divider textAlign="left" sx={{
@@ -139,7 +139,7 @@ const PatientAgenda = () => {
               ))}
             </div>
           ))}
-        </div>
+        </div> */}
       </> : null}
     </Container>
   );

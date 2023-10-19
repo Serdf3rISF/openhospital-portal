@@ -1,20 +1,20 @@
 import React, { useState, useEffect } from "react";
 import { dateIsoToString } from '../utils/ManageDate';
-const url_0 = 'http://develop-api.ohpp.local:18080/api/';
-const url_1 = 'http://localhost:18080/api/';
+const url_0 = 'https://develop-api.ohpp.local:18080/api/';
+
 // export const ListDoctorPatientsTest = async () => {
 export const DeafutlAllData = {
 
 
   // --- ADMIN_API
   getAllUsers: async function () {
-    let response = await fetch('http://develop-api.ohpp.local:18080/api/admin/users');
+    let response = await fetch(url_0 + 'admin/users');
     const data = await response.json();
     return data;
   },
   // --- AUTH_API
   getToken: async function () {
-    let response = await fetch(url_0 + 'api/auth/login', {
+    let response = await fetch(url_0 + 'auth/login', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -27,6 +27,9 @@ export const DeafutlAllData = {
     const data = await response.json();
     return data;
   },
+
+
+
   postLogin: async function (user: any, pass: any) {
     let response = await fetch(url_0 + 'auth/login', {
       method: 'POST',
