@@ -152,7 +152,8 @@ function PatientInsertMeasurements(props: {
         {props.setType.type == 'pressure' || props.setType.type == 'bp' || props.setType.type == 'blood_pressure' ? <Iarterial_pressure dataDef={filterRecordTypesByValueRet(data, "BP")} edit={editTF} delete={deleteTF} /> : null}
 
         {/* {props.setType.type == 'pressure' ? <Iarterial_pressure dataDef={{ min: values[0].min_arterial_pressure, max: values[0].max_arterial_pressure }} dataSelected={{ min: props.setType.value, max: props.setType.value }} /> : null}*/}
-        {/* <Save edit={editTF} type={type} /> */}
+         {/* <Save edit ={editTF} type={type} />  */}
+         <Save /> 
       </> : null}
 
 
