@@ -11,10 +11,11 @@ import { DefaultAllData } from '../../datajs/DefaultAllData'
 
 let btFilters: string[] = [];
 const columns = [
-  { field: 'date_complete', headerName: 'none', hide: true },
+  { field: 'date_time', headerName: 'none', hide: true },
+  { field: 'r_id', headerName: 'none', hide: true },
   { field: 'date', headerName: 'Data', width: 100, headerClassName: 'super-app-theme--header', sortable: false, disableColumnMenu: true },
   { field: 'hour', headerName: 'Hour', width: 60, headerClassName: 'super-app-theme--header', sortable: false, disableColumnMenu: true },
-  { field: 'type', headerName: 'Type', width: 140, headerClassName: 'super-app-theme--header', sortable: false, disableColumnMenu: true },
+  { field: 'type', headerName: 'Vaccination', width: 140, headerClassName: 'super-app-theme--header', sortable: false, disableColumnMenu: true },
 ];
 interface Items {
   id?: string;
@@ -32,7 +33,8 @@ const PatientVaccinations = () => {
   const [rowdataDef, setRowdataDef] = useState(rows);
   const [type, setType] = React.useState<string | null>(null);
   const [loadComponent, setLoadComponent] = useState(0);
-  let rows_def: any[] = [];
+  let rows_def: any[] = [];  
+  let navigate = useNavigate();
 
 
   useEffect(() => {
@@ -40,9 +42,7 @@ const PatientVaccinations = () => {
     let type_code = "V";
 
     DefaultAllData.getHospitalEventByPatientIdByTypeCode(id_patient, type_code).then((res) => {
-      console.log(res);
       res.forEach(function (k: any) {
-        console.log(k);
         if (!btFilters.includes(k.payload)) {
           btFilters.push(k.payload);
         }
@@ -54,8 +54,11 @@ const PatientVaccinations = () => {
           hour: getTimeLab(k.date),
           value: k.value1,
           misure: k.payload,
-          type: k.payload
+          type: k.payload,
+          r_id: k.id,
+          date_time: k.date
         });
+        // console.log(Object.keys(k));
       });
 
       setRowdata(rows_def);
@@ -76,7 +79,6 @@ const PatientVaccinations = () => {
     setLoadComponent(1);
   }, [rowdata, type]);
 
-  let navigate = useNavigate();
   return (
 
     <Container
@@ -138,14 +140,13 @@ const PatientVaccinations = () => {
             }}
 
             initialState={{
-
             }}
             columnVisibilityModel={{
-              date_complete: false,
+              r_id: false,
             }}
             sortModel={[{
-              field: 'date_complete',
-              sort: 'asc',
+              field: 'date_time',
+              sort: 'desc',
             }]}
             rows={rowdataDef}
             columns={columns}

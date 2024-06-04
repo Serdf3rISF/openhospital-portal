@@ -9,12 +9,12 @@ import { getTimeLab, getDateLab } from '../../utils/ManageDate';
 import { DefaultAllData } from '../../datajs/DefaultAllData'
 
 let btFilters: string[] = [];
-
 const columns = [
-  { field: 'date_complete', headerName: 'none', hide: true },
+  { field: 'date_time', headerName: 'none', hide: true },
+  { field: 'r_id', headerName: 'none', hide: true },
   { field: 'date', headerName: 'Data', width: 100, headerClassName: 'super-app-theme--header', sortable: false, disableColumnMenu: true },
   { field: 'hour', headerName: 'Hour', width: 60, headerClassName: 'super-app-theme--header', sortable: false, disableColumnMenu: true },
-  { field: 'type', headerName: 'Type', width: 140, headerClassName: 'super-app-theme--header', sortable: false, disableColumnMenu: true },
+  { field: 'type', headerName: 'Exam', width: 140, headerClassName: 'super-app-theme--header', sortable: false, disableColumnMenu: true },
 ];
 interface Items {
   id?: string;
@@ -33,21 +33,21 @@ const PatientExams = () => {
   const [type, setType] = React.useState<string | null>(null);
   const [loadComponent, setLoadComponent] = useState(0);
   let rows_def: any[] = [];
+  let navigate = useNavigate();
 
 
   useEffect(() => {
     let id_patient = localStorage.getItem("IdPatient");
     let type_code = "E";
     DefaultAllData.getHospitalEventByPatientIdByTypeCode(id_patient, type_code).then((res) => {
-      console.log(res);
       res.forEach(function (k_a: any) {
         let k = JSON.parse(k_a.payload);
-        console.log("----");
-        console.log(k);
         if (!btFilters.includes(k.LAB_EXA_ID_A_DESC)) {
           btFilters.push(k.LAB_EXA_ID_A_DESC);
         }
         rows_def.push({
+          id_user: k_a.patient.userId,
+          name_user: k_a.patient.firstName + " " + k_a.patient.secondName,
           id: k.LAB_ID,
           id_measure: k.LAB_ID,
           date_complete: k.LAB_DATE,
@@ -55,12 +55,59 @@ const PatientExams = () => {
           hour: getTimeLab(k.LAB_DATE),
           value: k.LAB_EXA_ID_A_DESC,
           misure: k.LAB_EXA_ID_A_DESC,
-          type: k.LAB_EXA_ID_A_DESC
+          type: k.LAB_EXA_ID_A_DESC,
+          r_adm_wrd_id_a_desc: k.ADM_WRD_ID_A_DESC,
+          r_adm_date_adm: k.ADM_DATE_ADM,
+          r_adm_admt_id_a_adm_desc: k.ADM_ADMT_ID_A_ADM_DESC,
+          r_adm_in_dis_id_a_desc: k.ADM_IN_DIS_ID_A_DESC,
+          r_adm_out_dis_id_a_desc: k.ADM_OUT_DIS_ID_A_DESC,
+          r_adm_date_dis_date: getDateLab(k.ADM_DATE_DIS),
+          r_adm_date_dis_time: getTimeLab(k.ADM_DATE_DIS),
+          r_adm_note: k.ADM_NOTE,
+          r_id: k.LAB_ID,
+          date_time: k.LAB_DATE
         });
+      //   console.log(Object.keys(k));
+      //   [
+      //     "LAB_ID",
+      //     "LAB_EXA_ID_A",
+      //     "LAB_DATE",
+      //     "LAB_RES",
+      //     "LAB_NOTE",
+      //     "LAB_PAT_ID",
+      //     "LAB_PAT_NAME",
+      //     "LAB_CROSS1",
+      //     "LAB_CROSS2",
+      //     "LAB_CROSS3",
+      //     "LAB_CROSS4",
+      //     "LAB_CROSS5",
+      //     "LAB_CROSS6",
+      //     "LAB_CROSS7",
+      //     "LAB_CROSS8",
+      //     "LAB_CROSS9",
+      //     "LAB_CROSS10",
+      //     "LAB_CROSS11",
+      //     "LAB_CROSS12",
+      //     "LAB_CROSS13",
+      //     "LAB_LOCK",
+      //     "LAB_AGE",
+      //     "LAB_SEX",
+      //     "LAB_MATERIAL",
+      //     "LAB_PAT_INOUT",
+      //     "LAB_CREATED_BY",
+      //     "LAB_CREATED_DATE",
+      //     "LAB_LAST_MODIFIED_BY",
+      //     "LAB_LAST_MODIFIED_DATE",
+      //     "LAB_ACTIVE",
+      //     "LAB_STATUS",
+      //     "LAB_EXA_ID_A_DESC"
+      // ]
       });
+
 
       setRowdata(rows_def);
     });
+
   }, []);
   useEffect(() => {
     if (type != null) {
@@ -77,7 +124,7 @@ const PatientExams = () => {
     setLoadComponent(1);
   }, [rowdata, type]);
 
-  let navigate = useNavigate();
+ 
   return (
 
     <Container
@@ -139,22 +186,13 @@ const PatientExams = () => {
 
 
             initialState={{
-              columns: {
-                columnVisibilityModel: {
-                  id: false,
-                  date_complete: false,
-                  id_measure: false,
-                  value: false,
-                  misure: false,
-                },
-              },
             }}
             columnVisibilityModel={{
-              date_complete: false,
+              r_id: false,
             }}
             sortModel={[{
-              field: 'date_complete',
-              sort: 'asc',
+              field: 'date_time',
+              sort: 'desc',
             }]}
             rows={rowdataDef}
             columns={columns}
