@@ -69,7 +69,7 @@ docker compose -f docker-compose-ops.yaml -f docker-compose.yaml build --build-a
 When starting API, they will be used by Flyway to create the actual DB:
 
 ```
-cp patient-portal/sql/migration/* data/$ENVIRONMENT_NAME/sql/migrations
+cp patient-portal/sql/migrations/* data/$ENVIRONMENT_NAME/sql/migrations
 ```
 
 ### 3. build the ui
