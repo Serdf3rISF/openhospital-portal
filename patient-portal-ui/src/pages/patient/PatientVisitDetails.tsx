@@ -1,6 +1,8 @@
 import * as React from 'react';
 import { Typography, Container, Box } from "@mui/material";
 import PatientSmartNav from "../../components/navBars/PatientSmartNav";
+import HospitalID from '../../components/utility/patient/HospitalId';
+
 
 import Grid from '@mui/material/Grid';
 
@@ -10,12 +12,13 @@ function PatientVisitDetails(props: {
   setType: {
     id_user: number;
     name_user: string;
-    date: string;
-    hour: string;
-    note: string;
-    r_opd_dis_id_a_desc: string;
-    r_opd_dis_id_a_type_desc: string;
-    r_opd_note: string;
+    r_opd_id: number;
+    r_opd_date: string | null | undefined;
+    r_opd_date_date: string | null | undefined;
+    r_opd_date_hour: string | null | undefined;
+    r_opd_dis_id_a_type_desc: string | null | undefined;
+    r_opd_dis_id_a_desc: string | null | undefined;
+    r_opd_note: string | null | undefined;
   };
 }) {
   return (
@@ -31,9 +34,7 @@ function PatientVisitDetails(props: {
       <PatientSmartNav page={'PatientVisitDetails'} />
       <Grid sx={{ m: 1, width: 1, maxWidth: 500 }} container spacing={2}>
         <Grid xs={12}>
-          <Typography style={{ fontWeight: 600 }}>
-            Id User: {props.setType.id_user}
-          </Typography>
+          <HospitalID id_user={props.setType.id_user} />
         </Grid>
         <Grid xs={12}>
           <Typography variant="body1" gutterBottom>
@@ -45,7 +46,7 @@ function PatientVisitDetails(props: {
             Date
           </Typography>
           <Typography display="block" variant="button" gutterBottom>
-            {props.setType.date}
+            {props.setType.r_opd_date_date}
           </Typography>
         </Grid>
         <Grid xs={6}>
@@ -53,23 +54,23 @@ function PatientVisitDetails(props: {
             Time
           </Typography>
           <Typography display="block" variant="button" gutterBottom>
-            {props.setType.hour}
+            {props.setType.r_opd_date_hour}
           </Typography>
         </Grid>
         <Grid xs={12}>
           <Typography style={{ fontWeight: 600 }}>
             Category
           </Typography>
-          <Typography variant="body1" gutterBottom>
-            {props.setType.r_opd_dis_id_a_desc}
+          <Typography variant="subtitle2" gutterBottom>
+            {props.setType.r_opd_dis_id_a_type_desc}
           </Typography>
         </Grid>
         <Grid xs={12}>
           <Typography style={{ fontWeight: 600 }}>
             Diagnosis
           </Typography>
-          <Typography variant="subtitle2" gutterBottom>
-            {props.setType.r_opd_dis_id_a_type_desc}
+          <Typography variant="body1" gutterBottom>
+            {props.setType.r_opd_dis_id_a_desc}
           </Typography>
         </Grid>
         <Grid xs={12}>

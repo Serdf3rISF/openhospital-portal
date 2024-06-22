@@ -18,8 +18,11 @@ import Otelephone from "../utility/user/output_data/Otelephone";
 import Otax_number from "../utility/user/output_data/Otax_number";
 import Logout from "../common/buttons/Logout";
 import ChangePalette from "../common/buttons/ChangePalette";
+import HospitalID from "../utility/patient/HospitalId";
+import TotalNotReadCount from "../utility/patient/TotalNotReadCount";
 
 interface Items {
+    userId: number;
     firstName?: string;
     secondName?: string;
     birthDate?: string;
@@ -93,8 +96,9 @@ class PatientNav extends Component<any, { main: boolean, setThemeUser: string, h
                                 <Typography color="#fff" variant="h6">
                                     {this.props.firstName} {this.props.secondName}
                                 </Typography>
-                                <Typography color="#fff" variant="button" >
-                                    ID:   {this.props.userId}
+                                <Typography color="#fff" variant="h6">
+                                    <HospitalID id_user={this.props.userId} />
+                                    <TotalNotReadCount id_user={this.props.userId} />
                                 </Typography>
                             </div>
                             <div style={{ "width": "5%", margin: "0px 2px 0px 0px", }} >

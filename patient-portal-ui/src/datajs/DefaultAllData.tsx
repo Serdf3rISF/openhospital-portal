@@ -226,7 +226,13 @@ export const DefaultAllData = {
     return data;
 
   },
+  getHospitalEventCountNotRead: async function (id_patient: any) {
+    let response = await fetch(url_0 + 'public/hospitalevents/count/read/' + id_patient);
+    const data = await response.json();
+    console.log(data);
+    return data;
 
+  },
 
 
 

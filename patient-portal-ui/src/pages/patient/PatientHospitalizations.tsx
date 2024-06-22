@@ -18,9 +18,10 @@ const columns = [
 ];
 interface Items {
   id?: string;
-  r_id?: string;
   id_user?: string;
   name_user?: string;
+  r_id?: string;
+  
   r_adm_wrd_id_a_desc: string;
   r_adm_admt_id_a_adm_desc: string;
   date_in: string;
@@ -52,9 +53,10 @@ const PatientHospitalizations = () => {
         }
         rows_def.push({
           id: k.ADM_ID,
-          r_id: k.ADM_ID,
           id_user: k_a.patient.userId,
           name_user: k_a.patient.firstName + " " + k_a.patient.secondName,
+          r_id: k.ADM_ID,
+         
           r_adm_wrd_id_a_desc: k.ADM_WRD_ID_A_DESC,
           r_adm_admt_id_a_adm_desc: k.ADM_ADMT_ID_A_ADM_DESC,
           date_in: getDateLab(k.ADM_DATE_ADM),

@@ -88,6 +88,7 @@ const LoginForm = ({ setAuth, setProfile, setIdPatient }) => {
           }
         }
         localStorage.clear();
+        localStorage.setItem("HospitalId", values.username);
         localStorage.setItem("IdPatient", res.patientId);
         localStorage.setItem("typeVisualization", "patient");
 

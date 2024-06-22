@@ -1,6 +1,8 @@
 import * as React from 'react';
 import { Typography, Container, Box } from "@mui/material";
 import PatientSmartNav from "../../components/navBars/PatientSmartNav";
+import  HospitalID from '../../components/utility/patient/HospitalId';
+
 
 import Grid from '@mui/material/Grid';
 
@@ -35,9 +37,7 @@ function PatientHospitalizationDetails(props: {
       <PatientSmartNav page={'PatientHospitalizationDetails'} />
       <Grid sx={{ m: 1, width: 1, maxWidth: 500 }} container spacing={2}>
         <Grid xs={12}>
-          <Typography style={{ fontWeight: 600 }}>
-            Id User: {props.setType.id_user}
-          </Typography>
+        <HospitalID id_user  ={props.setType.id_user } />
         </Grid>
         <Grid xs={12}>
           <Typography variant="body1" gutterBottom>
