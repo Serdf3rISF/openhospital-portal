@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Typography, Container, Box } from "@mui/material";
 import PatientSmartNav from "../../components/navBars/PatientSmartNav";
-import  HospitalID from '../../components/utility/patient/HospitalId';
+import HospitalID from '../../components/utility/patient/HospitalId';
 
 
 import Grid from '@mui/material/Grid';
@@ -10,16 +10,19 @@ import Grid from '@mui/material/Grid';
 
 function PatientHospitalizationDetails(props: {
   setType: {
-    id_user: number;
-    name_user: string;
+
+    id_user?: any;
+    name_user?: string;
+    r_id?: string;
+
     r_adm_wrd_id_a_desc: string;
     r_adm_admt_id_a_adm_desc: string;
-    date_in: string;
-    hour_in: string;
+    r_adm_date_adm_date: string;
+    r_adm_date_adm_hour: string;
     r_adm_in_dis_id_a_desc: string;
     r_adm_out_dis_id_a_desc: string;
-    date_out: string;
-    hour_out: string;
+    r_adm_date_dis_date: string;
+    r_adm_date_dis_hour: string;
     r_adm_note: string;
   };
 }) {
@@ -37,7 +40,7 @@ function PatientHospitalizationDetails(props: {
       <PatientSmartNav page={'PatientHospitalizationDetails'} />
       <Grid sx={{ m: 1, width: 1, maxWidth: 500 }} container spacing={2}>
         <Grid xs={12}>
-        <HospitalID id_user  ={props.setType.id_user } />
+          <HospitalID id_user={props.setType.id_user} />
         </Grid>
         <Grid xs={12}>
           <Typography variant="body1" gutterBottom>
@@ -65,7 +68,7 @@ function PatientHospitalizationDetails(props: {
             Recovery Date
           </Typography>
           <Typography display="block" variant="button" gutterBottom>
-            {props.setType.date_in}
+            {props.setType.r_adm_date_adm_date}
           </Typography>
         </Grid>
         <Grid xs={6}>
@@ -73,7 +76,7 @@ function PatientHospitalizationDetails(props: {
             Recovery Time
           </Typography>
           <Typography display="block" variant="button" gutterBottom>
-            {props.setType.hour_in}
+            {props.setType.r_adm_date_adm_hour}
           </Typography>
         </Grid>
         <Grid xs={12}>
@@ -97,7 +100,7 @@ function PatientHospitalizationDetails(props: {
             Discharge Date
           </Typography>
           <Typography display="block" variant="button" gutterBottom>
-            {props.setType.date_out}
+            {props.setType.r_adm_date_dis_date}
           </Typography>
         </Grid>
         <Grid xs={6}>
@@ -105,7 +108,7 @@ function PatientHospitalizationDetails(props: {
             Discharge Time
           </Typography>
           <Typography display="block" variant="button" gutterBottom>
-            {props.setType.hour_out}
+            {props.setType.r_adm_date_dis_hour}
           </Typography>
         </Grid>
         <Grid xs={12}>

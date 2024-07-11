@@ -41,6 +41,33 @@ const PatientHome = () => {
     let id_patient = localStorage.getItem("IdPatient");
     let typeVisualization = localStorage.getItem("typeVisualization");
 
+    DefaultAllData.getHospitalEventsByPatientId(id_patient).then((res) => {
+      console.log(res);
+      res.forEach((item: { readDate: null; eventType: { code: any; }; }) => {
+        if (item.readDate == null) {
+          switch (item.eventType.code) {
+            case 'O':
+              setNumO(prevNumO => prevNumO + 1);
+              break;
+            case 'E':
+              setNumE(prevNumE => prevNumE + 1);
+              break;
+            case 'A':
+              setNumA(prevNumA => prevNumA + 1);
+              break;
+            case 'T':
+              setNumT(prevNumT => prevNumT + 1);
+              break;
+            case 'V':
+              setNumV(prevNumV => prevNumV + 1);
+              break;
+            default:
+              break;
+          }
+        }
+      });
+
+    });
     DefaultAllData.getPatientsById(id_patient).then((res) => {
       setDataUser(res);
       setLoadComponent(1);
@@ -49,41 +76,7 @@ const PatientHome = () => {
       } else { setTypeVisualization("patient"); }
     });
   }, []);
-  useEffect(() => {
-    let id_patient = localStorage.getItem("IdPatient");
-    let type_code = "O";
-    DefaultAllData.getHospitalEventByPatientIdByTypeCode(id_patient, type_code).then((res) => {
-      setNumO(res.length);
-    });
-  }, []);
-  useEffect(() => {
-    let id_patient = localStorage.getItem("IdPatient");
-    let type_code = "E";
-    DefaultAllData.getHospitalEventByPatientIdByTypeCode(id_patient, type_code).then((res) => {
-      setNumE(res.length);
-    });
-  }, []);
-  useEffect(() => {
-    let id_patient = localStorage.getItem("IdPatient");
-    let type_code = "A";
-    DefaultAllData.getHospitalEventByPatientIdByTypeCode(id_patient, type_code).then((res) => {
-      setNumA(res.length);
-    });
-  }, []);
-  useEffect(() => {
-    let id_patient = localStorage.getItem("IdPatient");
-    let type_code = "T";
-    DefaultAllData.getHospitalEventByPatientIdByTypeCode(id_patient, type_code).then((res) => {
-      setNumT(res.length);
-    });
-  }, []);
-  useEffect(() => {
-    let id_patient = localStorage.getItem("IdPatient");
-    let type_code = "V";
-    DefaultAllData.getHospitalEventByPatientIdByTypeCode(id_patient, type_code).then((res) => {
-      setNumV(res.length);
-    });
-  }, []);
+
   return (
 
     <Container
@@ -124,12 +117,12 @@ const PatientHome = () => {
               </div>
               <div style={{ textAlign: "right" }}>
                 <Typography variant="h5">
-                  {d.label != "Measurements" ? "0/" : ""}
-                  {d.label == "Visits" ? numO : ""}
-                  {d.label == "Exams" ? numE : ""}
-                  {d.label == "Hospitalizations" ? numA : ""}
-                  {d.label == "Therapies" ? numT : ""}
-                  {d.label == "Vaccinations" ? numV : ""}
+                  {d.label != "Measurements" ? "" : ""}
+                  {d.label == "Visits" ? (numO > 0 ? numO : "-") : ""}
+                  {d.label == "Exams" ? (numE > 0 ? numE : "-") : ""}
+                  {d.label == "Hospitalizations" ? (numA > 0 ? numA : "-") : ""}
+                  {d.label == "Therapies" ? (numT > 0 ? numT : "-") : ""}
+                  {d.label == "Vaccinations" ? (numV > 0 ? numV : "-") : ""}
                 </Typography>
               </div>
             </Button>

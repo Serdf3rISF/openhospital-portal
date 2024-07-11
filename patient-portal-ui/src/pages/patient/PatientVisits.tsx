@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Button, Container, Box, Typography } from "@mui/material";
+import { Button, Container, Box, Typography, MenuItem, FormControl, Select, SelectChangeEvent } from "@mui/material";
+
 import PatientSmartNav from "../../components/navBars/PatientSmartNav";
 import { DataGrid } from '@mui/x-data-grid';
 import { useNavigate } from "react-router-dom";
@@ -26,12 +27,16 @@ interface Items {
   r_opd_dis_id_a_desc?: string;
 }
 
+
 const PatientVisit = () => {
   let rows: Items[] = [];
   const [rowdata, setRowdata] = useState(rows);
   const [rowdataDef, setRowdataDef] = useState(rows);
-  const [type, setType] = React.useState<string | null>(null);
+  const [type, setType] = React.useState<string | undefined>("All");
   const [loadComponent, setLoadComponent] = useState(0);
+  const handleChange = (event: SelectChangeEvent) => {
+    setType(event.target.value as string);
+  };
   let rows_def: any[] = [];
   let navigate = useNavigate();
 
@@ -50,7 +55,7 @@ const PatientVisit = () => {
           id: k.OPD_ID,
           id_user: k_a.patient.userId,
           name_user: k_a.patient.firstName + " " + k_a.patient.secondName,
-          r_opd_id: k.OPD_ID,          
+          r_opd_id: k.OPD_ID,
           r_opd_date: k.OPD_DATE,
           r_opd_date_date: getDateLab(k.OPD_DATE),
           r_opd_date_hour: getTimeLab(k.OPD_DATE),
@@ -66,14 +71,13 @@ const PatientVisit = () => {
 
   }, []);
   useEffect(() => {
-    if (type != null) {
+    if (type != "All") {
       rows = rowdata.filter(function (el) {
         return el.r_opd_dis_id_a_desc == type
       });
       setRowdataDef(rows);
     } else {
       rows = rowdata;
-
       setRowdataDef(rows);
     }
     setLoadComponent(1);
@@ -96,19 +100,32 @@ const PatientVisit = () => {
           <Box
             sx={{
               overflowX: "scroll",
-              width: 0.9,
+              width: 1,
               // justifyContent="flex-end" # DO NOT USE THIS WITH 'scroll'
             }}
           >
-
-            <ButtonGroup disableElevation className="button_group_f" sx={{ mt: 1, mb: 1, overflowX: "scroll", }} variant="outlined" aria-label="outlined button group">
+            <FormControl fullWidth>
+              <Select
+                labelId="option-select-label"
+                id="option-select"
+                value={type}
+                onChange={handleChange}
+               
+              >
+                <MenuItem value="All" >All</MenuItem>
+                {btFilters.map((bt_el) => (
+                  <MenuItem key={bt_el} color="primary" value={bt_el}> <Typography noWrap>{bt_el}</Typography> </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+            {/* <ButtonGroup disableElevation className="button_group_f" sx={{ mt: 1, mb: 1, overflowX: "scroll", }} variant="outlined" aria-label="outlined button group">
               <Button variant="contained" key="all" color="primary" onClick={() => setType(null)}>All</Button>
               {btFilters.map((bt_el) => (
                 <Button key={bt_el} color="primary" title={bt_el} onClick={() => setType(bt_el)}> <Typography noWrap>{bt_el}</Typography> </Button>
               ))}
-            </ButtonGroup>
+            </ButtonGroup> */}
           </Box>
-          <DataGrid 
+          <DataGrid
             sx={{
               border: 0,
               '&>.MuiDataGrid-main': {
@@ -146,7 +163,7 @@ const PatientVisit = () => {
               r_opd_date: false,
             }}
             sortModel={[{
-              field: 'date_time',
+              field: 'r_opd_date',
               sort: 'desc',
             }]}
             rows={rowdataDef}
@@ -160,3 +177,5 @@ const PatientVisit = () => {
 };
 
 export default PatientVisit;
+
+
