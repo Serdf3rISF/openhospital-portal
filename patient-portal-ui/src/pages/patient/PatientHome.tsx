@@ -42,7 +42,7 @@ const PatientHome = () => {
     let typeVisualization = localStorage.getItem("typeVisualization");
 
     DefaultAllData.getHospitalEventsByPatientId(id_patient).then((res) => {
-      console.log(res);
+      // console.log(res);
       res.forEach((item: { readDate: null; eventType: { code: any; }; }) => {
         if (item.readDate == null) {
           switch (item.eventType.code) {

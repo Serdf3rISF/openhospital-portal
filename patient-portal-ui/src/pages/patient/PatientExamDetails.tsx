@@ -25,7 +25,7 @@ function PatientExamDetails(props: {
     r_lab_note: string | null | undefined;
   };
 }) {
-  console.log(props);
+  // console.log(props);
   return (
     <Container
       maxWidth="lg"

@@ -4,7 +4,7 @@ import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
 import { DefaultAllData } from  '../../../datajs/DefaultAllData';
 function TotalNotReadCount(props: { id_user: number }) {
-    console.log(props);
+    // console.log(props);
     const theme = useTheme();
     const [dataUser, setDataUser] = useState([]);
     const matches = useMediaQuery(theme.breakpoints.up('sm'));

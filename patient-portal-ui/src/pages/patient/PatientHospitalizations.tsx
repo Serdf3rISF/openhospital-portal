@@ -52,7 +52,7 @@ const PatientHospitalizations = () => {
 
       res.forEach(function (k_a: any) {
         let k = JSON.parse(k_a.payload);
-        console.log(k);
+        // console.log(k);
         if (!btFilters.includes(k.ADM_IN_DIS_ID_A_DESC)) {
           btFilters.push(k.ADM_IN_DIS_ID_A_DESC);
         }

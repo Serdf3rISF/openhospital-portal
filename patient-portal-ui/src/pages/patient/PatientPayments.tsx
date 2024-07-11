@@ -45,7 +45,7 @@ let rows_def = rows;
 // let rows_def = rows.sort(compare(rows.date_complete));
 const PatientPayments = () => {
   const [type, setType] = React.useState(null);
-  console.log(type);
+  // console.log(type);
   if (type != null) {
     rows = rows_def.filter(function (el) {
       return el.type == type
@@ -53,7 +53,7 @@ const PatientPayments = () => {
   } else {
     rows = rows_def;
   }
-  console.log(rows);
+  // console.log(rows);
   if (rows) {
     // rows.sort(compare);
   }
