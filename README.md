@@ -6,21 +6,26 @@ The Patient Portal will allow patients to safely and intentionally (informed con
 
 ## Summary
 - [Components](#components)
-- [Instructions](#instructions)
+- [Prepare the environment (.env)](#prepare-the-environment-env)
 - [Building](#building)
   * [1. build images from sources](#1-build-images-from-sources)
-  * [2. create first migration script for the DB (only once)](#2-create-first-migration-script-for-the-db-only-once)
+  * [2. copy the DB scripts](#2-copy-the-db-scripts)
   * [3. build the ui](#3-build-the-ui)
 - [Starting](#starting)
   * [4. start the app mode with output in the terminal](#4-start-the-app-mode-with-output-in-the-terminal)
+    + [Demo data (optional)](#demo-data-optional)
   * [5. available services](#5-available-services)
 - [Stopping](#stopping)
-  * [5. stop all containers](#5-stop-all-containers)
-  * [6. Cleaning](#6-cleaning)
-  * [7. Clean the DB only](#7-clean-the-db-only)
+- [Clean everything](#clean-everything)
+  * [Clean the DB (only data)](#clean-the-db-only-data)
+  * [Destroy and recreate the DB](#destroy-and-recreate-the-db)
+  * [Remove all containers and volumes](#remove-all-containers-and-volumes)
+  * [Clean all previous data](#clean-all-previous-data)
 - [Screenshots](#screenshots)
 - [Developing](#developing)
-  * [API](#api)
+  * [Create DB script from code](#create-db-script-from-code-init-api)
+  * [Generate migration scripts after changes to API codebase](#generate-migration-scripts-after-changes-to-api-codebase-update-api)
+  * [API URLs](#api-urls)
   * [Develop the ui (React)](#develop-the-ui-react)
 - [Connector (WIP)](#connector-wip)
   * [1. Setup using a test db](#1-setup-using-a-test-db)
@@ -28,7 +33,7 @@ The Patient Portal will allow patients to safely and intentionally (informed con
   * [3. Start the connector with the output in the terminal](#3-start-the-connector-with-the-output-in-the-terminal)
   * [4. Using a production db](#4-using-a-production-db)
 
-<small><i>Table of contents generated with <a href='http://ecotrust-canada.github.io/markdown-toc/'>markdown-toc</a></i></small>
+<small><i><a href='http://ecotrust-canada.github.io/markdown-toc/'>Table of contents generated with markdown-toc</a></i></small>
 
 ## Components
 
@@ -36,20 +41,20 @@ The Patient Portal will allow patients to safely and intentionally (informed con
 <img src="./doc/images/patientportal.png"  width="70%" height="70%">
 </div>
 
-## Instructions
+## Prepare the environment (.env)
 
 First copy `dotenv` to `.env` and set up your variables and locations.
 
 Add in the `hosts` file the following entry `127.0.0.1 develop.ohpp.local api-develop.ohpp.local matomo-develop.ohpp.local`
 
+Export the new .env into variables `export $(grep -E 'ENVIRONMENT_NAME|BASE_DOMAIN' .env | xargs)`
+
 Create the folder structure
 
 ```
-export $(grep -E 'ENVIRONMENT_NAME|BASE_DOMAIN' .env | xargs)
 mkdir -p data/$ENVIRONMENT_NAME/database data/$ENVIRONMENT_NAME/database-matomo data/$ENVIRONMENT_NAME/logs/mysql data/$ENVIRONMENT_NAME/logs/mysql-matomo data/$ENVIRONMENT_NAME/logs/nginx data/$ENVIRONMENT_NAME/logs/nginx-matomo data/$ENVIRONMENT_NAME/run data/$ENVIRONMENT_NAME/sql/migrations data/$ENVIRONMENT_NAME/letsencrypt
 
 ```
-
 
 ## Building
 
@@ -59,28 +64,13 @@ mkdir -p data/$ENVIRONMENT_NAME/database data/$ENVIRONMENT_NAME/database-matomo 
 docker compose -f docker-compose-ops.yaml -f docker-compose.yaml build --build-arg ENVIRONMENT_NAME --build-arg BASE_DOMAIN build-api
 ```
 
-or launch image from ghcr
+### 2. copy the DB scripts
+
+When starting API, they will be used by Flyway to create the actual DB:
 
 ```
-docker compose -f docker-compose-ops.yaml -f docker-compose.yaml pull api
+cp patient-portal/sql/migrations/* data/$ENVIRONMENT_NAME/sql/migrations
 ```
-
-### 2. create first migration script for the DB (only once)
-
-Start mysql database/service (in background).
-
-```
-docker compose -f docker-compose-ops.yaml -f docker-compose.yaml up -d mysql
-```
-Wait several seconds to finish the startup.
-
-Let Hibernate to create the script in data/sql/migrations folder.
-
-```
-docker compose -f docker-compose-ops.yaml -f docker-compose.yaml run --rm init-api
-```
-
-Interrupt with CTRL-C after finish (don't mind the errors)
 
 ### 3. build the ui
 
@@ -92,15 +82,29 @@ docker compose -f docker-compose-ops.yaml -f docker-compose.yaml build --build-a
 
 ### 4. start the app mode with output in the terminal
 
+Start MySQL database/service (in background):
+
+```
+docker compose -f docker-compose-ops.yaml -f docker-compose.yaml up -d mysql
+```
+
+Start Matomo instance (in background, optional)
+
 ```
 # matomo instance (optional, in background)
 docker compose -f docker-compose-matomo.yaml up -d
+```
 
+Start the loadbalancer (Traefik), API and UI with output in the terminal. At the first boot, API will create the DB using the scripts copied at **Step 2**.
+
+```
 # the portal (it will create the DB the first time)
 docker compose -f docker-compose-ops.yaml -f docker-compose.yaml up loadbalancer api ui
 ```
 
-Demo data (optional, only once): From another window, with everything started, run:
+#### Demo data (optional)
+
+From another window, with everything started, run:
 
 ```
 docker compose -f docker-compose-ops.yaml -f docker-compose.yaml run --rm demo-data
@@ -126,6 +130,9 @@ Pohlman Margot      701018            pohlman2023        PATIENT
 Jeana Bennett       701019            jeana2023          PATIENT
 Abramo Oliver       701020            abramo2023         PATIENT
 ```
+
+To repeat the import, see [Clean the DB only (data)](#clean-the-db-only-data)
+
 
 
 ### 5. available services
@@ -167,32 +174,32 @@ Patient Portal (ui) graphics:
 
 ## Stopping
 
-### 5. stop all containers
-
-Interrupt with CTRL-C
+Interrupt with CTRL-C in the terminal from [4. start the app mode with output in the terminal](#4-start-the-app-mode-with-output-in-the-terminal)
 
 ```
 docker compose -f docker-compose-matomo.yaml stop
 docker compose -f docker-compose-ops.yaml -f docker-compose.yaml stop
 ```
 
-### 6. Cleaning
+## Clean everything
 
-Remove all containers and volumes
+Use the one you need most.
 
-```
-docker compose rm --stop --volumes --force
-docker compose -f docker-compose-matomo.yaml rm --stop --volumes --force
-docker volume rm $(docker volume ls --format '{{.Name}}' | grep ${PWD##*/})
-```
-
-Clean previous data
+### Clean the DB (only data)
 
 ```
-rm -rf data/$ENVIRONMENT_NAME
+docker compose -f docker-compose-ops.yaml -f docker-compose.yaml run --rm delete-all-data
 ```
 
-### 7. Clean the DB only
+...and reload demo data (optional)
+
+```
+# (optional) import demo data in the empty DB 
+docker compose -f docker-compose-ops.yaml -f docker-compose.yaml run --rm demo-data
+```
+
+
+### Destroy and recreate the DB
 
 ```
 # stop api (loadbalancer, matomo and ui can stay)
@@ -207,18 +214,30 @@ rm -rf data/$ENVIRONMENT_NAME/database/*
 # restart mysql
 docker compose -f docker-compose-ops.yaml -f docker-compose.yaml up -d mysql
 
-# restart api (will create the db structure using the already existing data/sql/migrations/V1__ddljpacreate.sql script)
+# restart api (will create the db structure using the already existing scripts at data/$ENVIRONMENT_NAME/sql/migrations)
 docker compose -f docker-compose-ops.yaml -f docker-compose.yaml up -d api
 ```
 
-...wait a bit for api to fully start.
+...and reload demo data (optional)
 
 ```
 # (optional) import demo data in the empty DB 
 docker compose -f docker-compose-ops.yaml -f docker-compose.yaml run --rm demo-data
 ```
 
+### Remove all containers and volumes
 
+```
+docker compose rm --stop --volumes --force
+docker compose -f docker-compose-matomo.yaml rm --stop --volumes --force
+docker volume rm $(docker volume ls --format '{{.Name}}' | grep ${PWD##*/})
+```
+
+### Clean all previous data
+
+```
+rm -rf data/$ENVIRONMENT_NAME
+```
 
 ## Screenshots
 
@@ -235,13 +254,60 @@ docker compose -f docker-compose-ops.yaml -f docker-compose.yaml run --rm demo-d
 
 ## Developing
 
-### API
+### Create DB script from code (init-api)
+
+Start mysql database/service (in background):
+
+```
+docker compose -f docker-compose-ops.yaml -f docker-compose.yaml up -d mysql
+```
+Wait several seconds to finish the startup.
+
+Let Hibernate to create the script in data/sql/migrations folder.
+
+```
+docker compose -f docker-compose-ops.yaml -f docker-compose.yaml run --rm init-api
+```
+
+Interrupt with CTRL-C after finish (don't mind the errors)
+
+In folder `data/$ENVIRONMENT_NAME/sql/migrations` you will find the `V1__ddljpacreate.sql` script with all needed tables. When started, API will use the scripts to create the DB.
+
+To repeat the process, destroy and recreate the DB and delete the generated script first:
+
+```
+rm data/$ENVIRONMENT_NAME/sql/migrations/*
+```
+
+### Generate migration scripts after changes to API codebase (update-api)
+
+Start mysql database/service (in background):
+
+```
+docker compose -f docker-compose-ops.yaml -f docker-compose.yaml up -d mysql
+```
+Wait several seconds to finish the startup.
+
+[1. build images from sources](#1-build-images-from-sources) the let Hibernate to create the script in `data/$ENVIRONMENT_NAME/sql/migrations` folder:
+
+```
+docker compose -f docker-compose-ops.yaml -f docker-compose.yaml run --rm update-api
+```
+
+Interrupt with CTRL-C after finish (don't mind the errors)
+
+In folder `data/$ENVIRONMENT_NAME/sql/migrations` you will find the `update.sql` script with all new tables and changes, rename it to `V2__name.sql`. 
+
+When started normally, API will use the new script to update the actual DB and track the migration changes with Flyway.
+
+
+### API URLs
 
 Api available at `https://develop-api.ohpp.local/` and `http://localhost:18080/`
 
 Swagger UI available at `https://develop-api.ohpp.local/swagger-ui/` and `https://develop-api.ohpp.local/v3/api-docs`
 
-- See ppoh.postman_collection.json
+See also `ppoh.postman_collection.json`
 
 ### Develop the ui (React)
 
@@ -252,7 +318,7 @@ npm install
 npm start
 ```
 
-Codebase in patient-portal-ui/src
+Codebase in `patient-portal-ui/src`
 
 ## Connector (WIP)
 
