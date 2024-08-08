@@ -1,8 +1,10 @@
 import * as React from 'react';
 import { Link } from "react-router-dom";
 import Button from '@mui/material/Button';
+import { useTranslation } from "react-i18next";
 
 const Bbowel = () => {
+  const { t } = useTranslation('examination');
   let misure = {
     id: null,
     type: "bowel",
@@ -20,7 +22,7 @@ const Bbowel = () => {
     color="primary"
     aria-label="insert"
     size="large">
-      Bowel
+     {t("bowel")}
     </Button>
   );
 };

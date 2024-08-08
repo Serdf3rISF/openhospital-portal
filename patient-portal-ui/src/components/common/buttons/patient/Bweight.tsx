@@ -2,8 +2,10 @@ import * as React from 'react';
 import { Link } from "react-router-dom";
 import Button from '@mui/material/Button';
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 
 const Bweight = () => {
+  const { t } = useTranslation('examination');
   let misure = {
     id: null,
     type: "weight",
@@ -22,7 +24,7 @@ const Bweight = () => {
       color="primary"
       aria-label="insert"
       size="large">
-      Weight
+       {t("weight")}
     </Button>
   );
 };

@@ -1,8 +1,10 @@
 import * as React from 'react';
 import { Link } from "react-router-dom";
 import Button from '@mui/material/Button';
+import { useTranslation } from "react-i18next";
 
 const Btemperature = () => {
+  const { t } = useTranslation('examination');
   let misure = {
     id: null,
     type: "temperature",
@@ -20,7 +22,7 @@ const Btemperature = () => {
       color="primary"
       aria-label="insert"
       size="large">
-      Temperature
+      {t("temperature")}
     </Button>
   );
 };

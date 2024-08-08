@@ -1,8 +1,10 @@
 import * as React from 'react';
 import { Link } from "react-router-dom";
 import Button from '@mui/material/Button';
+import { useTranslation } from "react-i18next";
 
 const Bascultation = () => {
+  const { t } = useTranslation('examination');
   let misure = {
     id: null,
     type: "ascultation",
@@ -23,7 +25,7 @@ const Bascultation = () => {
       color="primary"
       aria-label="insert"
       size="large">
-      Ascultation
+      {t("auscultation")}
     </Button>
   );
 };

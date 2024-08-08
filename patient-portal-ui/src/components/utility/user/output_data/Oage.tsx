@@ -1,8 +1,10 @@
 import React from "react";
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
+import { useTranslation } from "react-i18next";
 
 export default function Oage(age: any) {
+   const { t } = useTranslation('patient');
    let ageR: string | number = "...";
    let ageB: string | number = "...";
    if (age.data != undefined) {
@@ -12,11 +14,11 @@ export default function Oage(age: any) {
    return (
       <div>
          <Box>
-            <Typography variant="body1" display="inline">Age:</Typography>
+            <Typography variant="body1" display="inline">{t("age")}:</Typography>
             <Typography variant="body1" sx={{ fontWeight: 'bold', ml: 1 }} display="inline">{ageR}</Typography>
          </Box>
          <Box>
-            <Typography variant="body1" display="inline">Birthday:</Typography>
+            <Typography variant="body1" display="inline">{t("birthdate")}:</Typography>
             <Typography variant="body1" sx={{ fontWeight: 'bold', ml: 1 }} display="inline">{ageB}</Typography>
          </Box>
       </div>

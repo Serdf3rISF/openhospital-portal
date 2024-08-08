@@ -49,11 +49,27 @@ import { ThemeProvider, createTheme } from '@mui/material/styles';
 import { Context } from "./Context";
 import { theme_1, theme_2, theme_3, theme_4, theme_5 } from "./styles/themes";
 
+import resources from "./resources";
+import { I18N_FALLBACK_LNG } from "./resources/config";
+import i18n from "i18next";
+import { useTranslation, initReactI18next } from "react-i18next";
+
+i18n
+  .use(initReactI18next)
+  .init({
+    resources,
+    fallbackLng: I18N_FALLBACK_LNG,
+    supportedLngs: ["en", "it"],
+    interpolation: {
+      escapeValue: false,
+    },
+
+  });
 export const ThemeContext = React.createContext();
 export const UserContext = React.createContext();
 function App(props) {
 
-  
+
   const [auth, setAuth] = useState(false);
   const [profile, setProfile] = useState("aaaaa");
   const location = useLocation();
@@ -62,12 +78,19 @@ function App(props) {
 
   const value = { theme, setTheme };
 
+  const [, setLang] = useState(i18n.language);
+  const changeLang = (l) => {
+    i18n.changeLanguage(l).then(() => {
+      setLang(l);
+    });
+  };
+
   if (matches) {
     return (
       <>
         <Context.Provider value={{ theme, setTheme }} >
           <ThemeProvider theme={theme}>
-          <CssBaseline />
+            <CssBaseline />
             <p className='only_smart'>Only Smart Phone</p>
           </ThemeProvider>
         </Context.Provider>
