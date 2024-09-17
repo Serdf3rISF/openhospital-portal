@@ -13,8 +13,8 @@ import { DefaultAllData } from '../../datajs/DefaultAllData'
 
 let btFilters: string[] = [];
 const columns = [
-  { field: 'date_time', headerName: 'none', hide: true },
-  { field: 'r_id', headerName: 'none', hide: true },
+  { field: 'date_time', headerName: '', hide: true, sortable: false, disableColumnMenu: true },
+  { field: 'r_id', headerName: '', hide: true, sortable: false, disableColumnMenu: true },
   { field: 'date', headerName: 'Data', width: 100, headerClassName: 'super-app-theme--header', sortable: false, disableColumnMenu: true },
   { field: 'hour', headerName: 'Hour', width: 60, headerClassName: 'super-app-theme--header', sortable: false, disableColumnMenu: true },
   { field: 'misure', headerName: 'Misure', width: 140, headerClassName: 'super-app-theme--header', sortable: false, disableColumnMenu: true }

@@ -118,6 +118,14 @@ export const DefaultAllData = {
     let sort_data = data.sort((a: any, b: any) => stringToDate(b.recordDate).valueOf() - stringToDate(a.recordDate).valueOf());
     return sort_data;
   },
+  // getHospitalEventByPatientId: async function (id_patient: any) {
+  //   let response = await fetch(url_0 + 'public/hospitalevents/eventType/' + id_patient );
+  //   const data = await response.json();
+  //   // let sort_data = data.sort((a: any, b: any) => stringToDate(b.recordDate).valueOf() - stringToDate(a.recordDate).valueOf());
+  //   console.log("AAA");
+  //   console.log(data);
+  //   return data;
+  // },
   getRecordTypes: async function () {
     let response = await fetch(url_0 + 'public/recordtypes');
     const data = await response.json();
@@ -226,7 +234,13 @@ export const DefaultAllData = {
     return data;
 
   },
+  getHospitalEventCountNotRead: async function (id_patient: any) {
+    let response = await fetch(url_0 + 'public/hospitalevents/count/read/' + id_patient);
+    const data = await response.json();
+    console.log(data);
+    return data;
 
+  },
 
 
 

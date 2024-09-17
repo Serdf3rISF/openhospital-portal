@@ -32,7 +32,7 @@ export default function AdministrationUserProfile() {
   });
 
   const toggleDrawer = (anchor, open) => (event) => {
-    console.log(anchor);
+    // console.log(anchor);
     if (
       event &&
       event.type === 'keydown' &&

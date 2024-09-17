@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Button, Container, Box } from "@mui/material";
+import { Button, Container, Box, Typography, MenuItem, FormControl, Select, SelectChangeEvent } from "@mui/material";
 import PatientSmartNav from "../../components/navBars/PatientSmartNav";
 import { DataGrid } from '@mui/x-data-grid';
 import { useNavigate } from "react-router-dom";
@@ -30,8 +30,11 @@ const PatientTherapies = () => {
   let rows: Items[] = [];
   const [rowdata, setRowdata] = useState(rows);
   const [rowdataDef, setRowdataDef] = useState(rows);
-  const [type, setType] = React.useState<string | null>(null);
+  const [type, setType] = React.useState<string | undefined>("All");
   const [loadComponent, setLoadComponent] = useState(0);
+  const handleChange = (event: SelectChangeEvent) => {
+    setType(event.target.value as string);
+  };
   let rows_def: any[] = [];
   let navigate = useNavigate();
 
@@ -63,7 +66,7 @@ const PatientTherapies = () => {
     });
   }, []);
   useEffect(() => {
-    if (type != null) {
+    if (type != "All") {
       rows = rowdata.filter(function (el) {
         return el.misure == type
       });
@@ -100,12 +103,26 @@ const PatientTherapies = () => {
               // justifyContent="flex-end" # DO NOT USE THIS WITH 'scroll'
             }}
           >
-            <ButtonGroup disableElevation className="button_group_f" sx={{ mt: 1, mb: 1, overflowX: " scroll", }} variant="outlined" aria-label="outlined button group">
+              <FormControl fullWidth>
+              <Select
+                labelId="option-select-label"
+                id="option-select"
+                value={type}
+                onChange={handleChange}
+               
+              >
+                <MenuItem value="All" >All</MenuItem>
+                {btFilters.map((bt_el) => (
+                  <MenuItem key={bt_el} color="primary" value={bt_el}> <Typography noWrap>{bt_el}</Typography> </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+            {/* <ButtonGroup disableElevation className="button_group_f" sx={{ mt: 1, mb: 1, overflowX: " scroll", }} variant="outlined" aria-label="outlined button group">
               <Button variant={null === type ? 'contained' : 'outlined'} key="all" color="primary" onClick={() => setType(null)}>All</Button>
               {btFilters.map((bt_el) => (
                 <Button variant={bt_el === type ? 'contained' : 'outlined'} key={bt_el} color="primary" onClick={() => { setType(bt_el); }}>{bt_el}</Button>
               ))}
-            </ButtonGroup>
+            </ButtonGroup> */}
           </Box>
           <DataGrid
             sx={{

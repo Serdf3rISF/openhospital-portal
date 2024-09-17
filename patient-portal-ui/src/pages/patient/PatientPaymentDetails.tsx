@@ -16,8 +16,8 @@ function PatientPaymentDetails(props: {
     note: boolean | React.ReactChild | React.ReactFragment | React.ReactPortal | null | undefined;
   };
 }) {
-  console.log("--- props --- PatientPaymentDetails");
-  console.log(props);
+  // console.log("--- props --- PatientPaymentDetails");
+  // console.log(props);
   return (
     <Container
       maxWidth="lg"

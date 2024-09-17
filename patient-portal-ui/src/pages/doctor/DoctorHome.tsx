@@ -27,28 +27,28 @@ function DoctorHome() {
   // let data_json_test: any = ListDoctorPatientsTest;
   // console.log(data_json_test);
   const [data, setData] = useState([]);
-  console.log(data);
+  // console.log(data);
   const [patientsName, setPatientsName] = React.useState<any>("");
   const [patientsSurName, setPatientsSurname] = React.useState<any>("");
 
   useEffect(() => {
     DefaultAllData.getToken().then((res) => {
-      console.log("response getToken");
-      console.log(res);
+      // console.log("response getToken");
+      // console.log(res);
       localStorage.setItem("Token", res)
 
       DefaultAllData.getPatients().then((res) => {
-        console.log("response getPatients");
-        console.log(res);
+        // console.log("response getPatients");
+        // console.log(res);
 
         setData(res);
         DefaultAllData.getHospitalevents().then((res) => {
-          console.log("response getHospitalevents");
-          console.log(res);
+          // console.log("response getHospitalevents");
+          // console.log(res);
         });
         DefaultAllData.getPatientrecords().then((res) => {
-          console.log("response getPatientrecords");
-          console.log(res);
+          // console.log("response getPatientrecords");
+          // console.log(res);
         });
 
       });

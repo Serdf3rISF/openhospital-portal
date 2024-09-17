@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Button, Container, Box } from "@mui/material";
+import { Button, Container, Box, Typography, MenuItem, FormControl, Select, SelectChangeEvent } from "@mui/material";
 import PatientSmartNav from "../../components/navBars/PatientSmartNav";
 import { DataGrid } from '@mui/x-data-grid';
 import { useNavigate } from "react-router-dom";
@@ -10,33 +10,37 @@ import { DefaultAllData } from '../../datajs/DefaultAllData'
 
 let btFilters: string[] = [];
 const columns = [
-  { field: 'date_time', headerName: 'none', hide: true },
-  { field: 'r_id', headerName: 'none', hide: true },
-  { field: 'date_in', headerName: 'Data', width: 100, headerClassName: 'super-app-theme--header', sortable: false, disableColumnMenu: true },
-  { field: 'hour_in', headerName: 'Hour', width: 60, headerClassName: 'super-app-theme--header', sortable: false, disableColumnMenu: true },
-  { field: 'r_adm_in_dis_id_a_desc', headerName: 'Hospitalization', width: 140, headerClassName: 'super-app-theme--header', sortable: false, disableColumnMenu: true },
+  { field: 'r_adm_date_adm', headerName: 'none', hide: true },
+  { field: 'r_adm_id', headerName: 'none', hide: true },
+  { field: 'r_adm_date_adm_date', headerName: 'Data', width: 100, headerClassName: 'super-app-theme--header', sortable: false, disableColumnMenu: true },
+  { field: 'r_adm_date_adm_hour', headerName: 'Hour', width: 60, headerClassName: 'super-app-theme--header', sortable: false, disableColumnMenu: true },
+  { field: 'r_adm_in_dis_id_a_desc', headerName: 'Diagnosis', width: 140, headerClassName: 'super-app-theme--header', sortable: false, disableColumnMenu: true },
 ];
 interface Items {
   id?: string;
-  r_id?: string;
   id_user?: string;
   name_user?: string;
+  r_id?: string;
+
   r_adm_wrd_id_a_desc: string;
   r_adm_admt_id_a_adm_desc: string;
-  date_in: string;
-  hour_in: string;
+  r_adm_date_adm_date: string;
+  r_adm_date_adm_hour: string;
   r_adm_in_dis_id_a_desc: string;
   r_adm_out_dis_id_a_desc: string;
-  date_out: string;
-  hour_out: string;
+  r_adm_date_dis_date: string;
+  r_adm_date_dis_hour: string;
   r_adm_note: string;
 }
 const PatientHospitalizations = () => {
   let rows: Items[] = [];
   const [rowdata, setRowdata] = useState(rows);
   const [rowdataDef, setRowdataDef] = useState(rows);
-  const [type, setType] = React.useState<string | null>(null);
+  const [type, setType] = React.useState<string | undefined>("All");
   const [loadComponent, setLoadComponent] = useState(0);
+  const handleChange = (event: SelectChangeEvent) => {
+    setType(event.target.value as string);
+  };
   let rows_def: any[] = [];
   let navigate = useNavigate();
 
@@ -45,26 +49,30 @@ const PatientHospitalizations = () => {
     let id_patient = localStorage.getItem("IdPatient");
     let type_code = "A";
     DefaultAllData.getHospitalEventByPatientIdByTypeCode(id_patient, type_code).then((res) => {
+
       res.forEach(function (k_a: any) {
         let k = JSON.parse(k_a.payload);
+        // console.log(k);
         if (!btFilters.includes(k.ADM_IN_DIS_ID_A_DESC)) {
           btFilters.push(k.ADM_IN_DIS_ID_A_DESC);
         }
         rows_def.push({
           id: k.ADM_ID,
-          r_id: k.ADM_ID,
           id_user: k_a.patient.userId,
           name_user: k_a.patient.firstName + " " + k_a.patient.secondName,
+          r_adm_id: k.ADM_ID,
+
           r_adm_wrd_id_a_desc: k.ADM_WRD_ID_A_DESC,
           r_adm_admt_id_a_adm_desc: k.ADM_ADMT_ID_A_ADM_DESC,
-          date_in: getDateLab(k.ADM_DATE_ADM),
-          hour_in: getTimeLab(k.ADM_DATE_ADM),
+          r_adm_date_adm: k.ADM_DATE_ADM,
+          r_adm_date_adm_date: getDateLab(k.ADM_DATE_ADM),
+          r_adm_date_adm_hour: getTimeLab(k.ADM_DATE_ADM),
           r_adm_in_dis_id_a_desc: k.ADM_IN_DIS_ID_A_DESC,
           r_adm_out_dis_id_a_desc: k.ADM_OUT_DIS_ID_A_DESC,
-          date_out: getDateLab(k.ADM_DATE_DIS),
-          hour_out: getTimeLab(k.ADM_DATE_DIS),
+          r_adm_date_dis_date: getDateLab(k.ADM_DATE_DIS),
+          r_adm_date_dis_hour: getTimeLab(k.ADM_DATE_DIS),
           r_adm_note: k.ADM_NOTE,
-          date_time: k.ADM_DATE_ADM
+
 
         });
         //   console.log(Object.keys(k));
@@ -117,7 +125,7 @@ const PatientHospitalizations = () => {
     });
   }, []);
   useEffect(() => {
-    if (type != null) {
+    if (type != "All") {
       rows = rowdata.filter(function (el) {
         return el.r_adm_in_dis_id_a_desc == type
       });
@@ -154,12 +162,26 @@ const PatientHospitalizations = () => {
               // justifyContent="flex-end" # DO NOT USE THIS WITH 'scroll'
             }}
           >
-            <ButtonGroup disableElevation className="button_group_f" sx={{ mt: 1, mb: 1, overflowX: "scroll", }} variant="outlined" aria-label="outlined button group">
+            <FormControl fullWidth>
+              <Select
+                labelId="option-select-label"
+                id="option-select"
+                value={type}
+                onChange={handleChange}
+
+              >
+                <MenuItem value="All" >All</MenuItem>
+                {btFilters.map((bt_el) => (
+                  <MenuItem key={bt_el} color="primary" value={bt_el}> <Typography noWrap>{bt_el}</Typography> </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+            {/* <ButtonGroup disableElevation className="button_group_f" sx={{ mt: 1, mb: 1, overflowX: "scroll", }} variant="outlined" aria-label="outlined button group">
               <Button variant={null === type ? 'contained' : 'outlined'} key="all" color="primary" onClick={() => setType(null)}>All</Button>
               {btFilters.map((bt_el) => (
                 <Button variant={bt_el === type ? 'contained' : 'outlined'} key={bt_el} color="primary" onClick={() => { setType(bt_el); }}>{bt_el}</Button>
               ))}
-            </ButtonGroup>
+            </ButtonGroup> */}
           </Box>
           <DataGrid
             sx={{
@@ -195,10 +217,11 @@ const PatientHospitalizations = () => {
             initialState={{
             }}
             columnVisibilityModel={{
-              r_id: false,
+              r_adm_date_adm: false,
+              r_adm_id: false,
             }}
             sortModel={[{
-              field: 'date_time',
+              field: 'r_adm_date_adm',
               sort: 'desc',
             }]}
             rows={rowdataDef}

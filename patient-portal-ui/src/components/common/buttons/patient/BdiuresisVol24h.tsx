@@ -1,8 +1,10 @@
 import * as React from 'react';
 import { Link } from "react-router-dom";
 import Button from '@mui/material/Button';
+import { useTranslation } from "react-i18next";
 
 const BdiuresisVol24h = () => {
+  const { t } = useTranslation('examination');
   let misure = {
     id: null,
     type: "diuresis_vol_24h",
@@ -20,7 +22,7 @@ const BdiuresisVol24h = () => {
       color="primary"
       aria-label="insert"
       size="large">
-      Diuresis vol 24h
+        {t("diuresisvolume24h")}
     </Button>
   );
 };
