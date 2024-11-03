@@ -12,9 +12,9 @@ function LangSwitcher() {
     const [language, setLanguage] = useState("id");
 
     const handleLangChange = (value: any) => {
-        console.log(value);
+        // console.log(value);
         if (value == "GB") { value = "en" }
-        console.log(value.toLowerCase());
+        // console.log(value.toLowerCase());
         setLanguage(value.toLowerCase());
         localStorage.setItem("lang", value.toLowerCase());
         i18n.changeLanguage(value.toLowerCase());
@@ -27,7 +27,7 @@ function LangSwitcher() {
     };
     const handleClose = (evt: { target: { value: any; }; }) => {
         const lang = evt.target.value;
-        console.log(lang);
+        // console.log(lang);
         setLanguage(lang);
         i18n.changeLanguage(lang);
         setAnchorEl(null);
