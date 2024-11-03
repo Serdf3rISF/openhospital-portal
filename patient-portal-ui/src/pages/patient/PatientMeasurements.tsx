@@ -10,15 +10,9 @@ import Slide from '@mui/material/Slide';
 
 import { getTimeLab, getDateLab } from '../../utils/ManageDate';
 import { DefaultAllData } from '../../datajs/DefaultAllData'
-
+import { useTranslation } from "react-i18next";
 let btFilters: string[] = [];
-const columns = [
-  { field: 'date_time', headerName: '', hide: true, sortable: false, disableColumnMenu: true },
-  { field: 'r_id', headerName: '', hide: true, sortable: false, disableColumnMenu: true },
-  { field: 'date', headerName: 'Data', width: 100, headerClassName: 'super-app-theme--header', sortable: false, disableColumnMenu: true },
-  { field: 'hour', headerName: 'Hour', width: 60, headerClassName: 'super-app-theme--header', sortable: false, disableColumnMenu: true },
-  { field: 'misure', headerName: 'Misure', width: 140, headerClassName: 'super-app-theme--header', sortable: false, disableColumnMenu: true }
-];
+
 interface Items {
   id?: string;
   id_measure?: string;
@@ -41,8 +35,15 @@ interface Items {
 
 
 const PatientMeasurements = () => {
+  const {t} = useTranslation(["button_pp","label_pp"]);
+  const columns = [
+    { field: 'date_time', headerName: '', hide: true, sortable: false, disableColumnMenu: true },
+    { field: 'r_id', headerName: '', hide: true, sortable: false, disableColumnMenu: true },
+    { field: 'date', headerName:  t("date", { ns: 'label_pp' }), width: 100, headerClassName: 'super-app-theme--header', sortable: false, disableColumnMenu: true },
+    { field: 'hour', headerName: t("hour", { ns: 'label_pp' }), width: 60, headerClassName: 'super-app-theme--header', sortable: false, disableColumnMenu: true },
+    { field: 'misure', headerName: t("misure", { ns: 'label_pp' }), width: 140, headerClassName: 'super-app-theme--header', sortable: false, disableColumnMenu: true }
+  ];
   let rows: Items[] = [];
-
   const location = useLocation();
   const [loadSnackBar, setLoadSnackBar] = useState(false);
   const [messageSnackBar, setMessageSnackBar] = useState("Default message");
@@ -172,7 +173,7 @@ const PatientMeasurements = () => {
             }}
           >
             <ButtonGroup disableElevation className="button_group_f" sx={{ mt: 1, mb: 1, overflowX: "scroll", }} variant="outlined" aria-label="outlined button group">
-              <Button variant={null === type ? 'contained' : 'outlined'} key="all" color="primary" onClick={() => setType(null)}>All</Button>
+              <Button variant={null === type ? 'contained' : 'outlined'} key="all" color="primary" onClick={() => setType(null)}>{t("all")}</Button>
               {btFilters.map((bt_el) => (
                 <Button variant={bt_el === type ? 'contained' : 'outlined'} key={bt_el} color="primary" onClick={() => { setType(bt_el); }}>{bt_el}</Button>
               ))}

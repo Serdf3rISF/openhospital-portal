@@ -8,15 +8,9 @@ import ButtonGroup from '@mui/material/ButtonGroup';
 
 import { getTimeLab, getDateLab } from '../../utils/ManageDate';
 import { DefaultAllData } from '../../datajs/DefaultAllData'
-
+import { useTranslation } from "react-i18next";
 let btFilters: string[] = [];
-const columns = [
-  { field: 'date_time', headerName: 'none', hide: true },
-  { field: 'r_id', headerName: 'none', hide: true },
-  { field: 'date', headerName: 'Data', width: 100, headerClassName: 'super-app-theme--header', sortable: false, disableColumnMenu: true },
-  { field: 'hour', headerName: 'Hour', width: 60, headerClassName: 'super-app-theme--header', sortable: false, disableColumnMenu: true },
-  { field: 'type', headerName: 'Vaccination', width: 140, headerClassName: 'super-app-theme--header', sortable: false, disableColumnMenu: true },
-];
+
 interface Items {
   id?: string;
   id_measure?: string;
@@ -28,6 +22,14 @@ interface Items {
   type?: string;
 }
 const PatientVaccinations = () => {
+  const { t } = useTranslation(["button_pp", "label_pp"]);
+  const columns = [
+    { field: 'date_time', headerName: 'none', hide: true },
+    { field: 'r_id', headerName: 'none', hide: true },
+    { field: 'date', headerName: t("date", { ns: 'label_pp' }), width: 100, headerClassName: 'super-app-theme--header', sortable: false, disableColumnMenu: true },
+    { field: 'hour', headerName: t("hour", { ns: 'label_pp' }), width: 60, headerClassName: 'super-app-theme--header', sortable: false, disableColumnMenu: true },
+    { field: 'type', headerName: t("vaccinations", { ns: 'label_pp' }), width: 140, headerClassName: 'super-app-theme--header', sortable: false, disableColumnMenu: true },
+  ];
   let rows: Items[] = [];
   const [rowdata, setRowdata] = useState(rows);
   const [rowdataDef, setRowdataDef] = useState(rows);
@@ -112,7 +114,7 @@ const PatientVaccinations = () => {
                 onChange={handleChange}
                
               >
-                <MenuItem value="All" >All</MenuItem>
+                <MenuItem value="All" >{t("all")}</MenuItem>
                 {btFilters.map((bt_el) => (
                   <MenuItem key={bt_el} color="primary" value={bt_el}> <Typography noWrap>{bt_el}</Typography> </MenuItem>
                 ))}
@@ -159,6 +161,7 @@ const PatientVaccinations = () => {
             initialState={{
             }}
             columnVisibilityModel={{
+              date_time: false,
               r_id: false,
             }}
             sortModel={[{

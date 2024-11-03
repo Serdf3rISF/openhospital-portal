@@ -6,6 +6,7 @@ import HospitalID from '../../components/utility/patient/HospitalId';
 
 import Grid from '@mui/material/Grid';
 
+import { useTranslation } from "react-i18next";
 
 
 function PatientHospitalizationDetails(props: {
@@ -26,6 +27,7 @@ function PatientHospitalizationDetails(props: {
     r_adm_note: string;
   };
 }) {
+  const { t } = useTranslation('label_pp');
   return (
     <Container
       maxWidth="lg"
@@ -49,7 +51,7 @@ function PatientHospitalizationDetails(props: {
         </Grid>
         <Grid xs={6}>
           <Typography style={{ fontWeight: 600 }}>
-            Hospital Ward
+          {t("hospital_ward")}
           </Typography>
           <Typography display="block" variant="button" gutterBottom>
             {props.setType.r_adm_wrd_id_a_desc}
@@ -57,7 +59,7 @@ function PatientHospitalizationDetails(props: {
         </Grid>
         <Grid xs={6}>
           <Typography style={{ fontWeight: 600 }}>
-            Hospitalization Type
+          {t("hospitalization_type")}
           </Typography>
           <Typography display="block" variant="button" gutterBottom>
             {props.setType.r_adm_admt_id_a_adm_desc}
@@ -65,7 +67,7 @@ function PatientHospitalizationDetails(props: {
         </Grid>
         <Grid xs={6}>
           <Typography style={{ fontWeight: 600 }}>
-            Recovery Date
+          {t("recovery")} {t("date")}
           </Typography>
           <Typography display="block" variant="button" gutterBottom>
             {props.setType.r_adm_date_adm_date}
@@ -73,7 +75,7 @@ function PatientHospitalizationDetails(props: {
         </Grid>
         <Grid xs={6}>
           <Typography style={{ fontWeight: 600 }}>
-            Recovery Time
+          {t("recovery")} {t("time")}
           </Typography>
           <Typography display="block" variant="button" gutterBottom>
             {props.setType.r_adm_date_adm_hour}
@@ -81,7 +83,7 @@ function PatientHospitalizationDetails(props: {
         </Grid>
         <Grid xs={12}>
           <Typography style={{ fontWeight: 600 }}>
-            Diagnosis In
+          {t("diagnosis")} {t("in")}
           </Typography>
           <Typography variant="body1" gutterBottom>
             {props.setType.r_adm_in_dis_id_a_desc}
@@ -89,7 +91,7 @@ function PatientHospitalizationDetails(props: {
         </Grid>
         <Grid xs={12}>
           <Typography style={{ fontWeight: 600 }}>
-            Diagnosis Out
+          {t("diagnosis")} {t("out")}
           </Typography>
           <Typography variant="body1" gutterBottom>
             {props.setType.r_adm_out_dis_id_a_desc}
@@ -97,7 +99,7 @@ function PatientHospitalizationDetails(props: {
         </Grid>
         <Grid xs={6}>
           <Typography style={{ fontWeight: 600 }}>
-            Discharge Date
+          {t("discharge")} {t("date")}
           </Typography>
           <Typography display="block" variant="button" gutterBottom>
             {props.setType.r_adm_date_dis_date}
@@ -105,7 +107,7 @@ function PatientHospitalizationDetails(props: {
         </Grid>
         <Grid xs={6}>
           <Typography style={{ fontWeight: 600 }}>
-            Discharge Time
+          {t("discharge")} {t("time")}
           </Typography>
           <Typography display="block" variant="button" gutterBottom>
             {props.setType.r_adm_date_dis_hour}
@@ -113,7 +115,7 @@ function PatientHospitalizationDetails(props: {
         </Grid>
         <Grid xs={12}>
           <Typography style={{ fontWeight: 600 }}>
-            Note
+          {t("note")}
           </Typography>
           <Box border={1} sx={{ width: '100%', maxWidth: 500 }}>
             <Typography sx={{ m: 1 }} variant="caption" gutterBottom>

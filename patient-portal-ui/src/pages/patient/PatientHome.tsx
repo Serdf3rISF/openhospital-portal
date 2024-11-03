@@ -42,7 +42,7 @@ const PatientHome = () => {
     {
       id: 1,
       label: t("measurements"),
-      id_label: "Measurements",
+      id_label: "measurements",
       to: '/PatientMeasurements',
       locked: false,
       order: 1,
@@ -183,7 +183,7 @@ const PatientHome = () => {
               </div>
               <div style={{ textAlign: "right" }}>
                 <Typography variant="h5">
-                  {d.id_label != "Measurements" ? "" : ""}
+                  {d.id_label != "Medasurements" ? "" : ""}
                   {d.id_label == "Visits" ? (numO > 0 ? numO : "-") : ""}
                   {d.id_label == "Exams" ? (numE > 0 ? numE : "-") : ""}
                   {d.id_label == "Hospitalizations" ? (numA > 0 ? numA : "-") : ""}

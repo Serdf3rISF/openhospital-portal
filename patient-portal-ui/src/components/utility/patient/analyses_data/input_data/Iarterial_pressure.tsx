@@ -12,7 +12,8 @@ import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import { DefaultAllData } from "../../../../../datajs/DefaultAllData";
 import { capitalizeOnlyFirstLetter, isIsoDate, toIsoDate } from '../../../../../utils/ManageDate';
-import dayjs from 'dayjs'
+import dayjs from 'dayjs';
+import { useTranslation } from "react-i18next";
 
 interface Iarterial_pressureProps {
     code?: string;
@@ -40,6 +41,7 @@ export default function Iarterial_pressure(props: {
     edit?: boolean
     delete?: boolean
 }) {
+    const { t } = useTranslation('label_pp');
     const [dataMin, setDataMin] = React.useState<any>(0);
     const [dataMax, setDataMax] = React.useState<any>(0);
     const navigate = useNavigate();
@@ -228,7 +230,8 @@ export default function Iarterial_pressure(props: {
                         required
                         disabled={dataDisabled}
                         name="arterial_pressure"
-                        label={capitalizeOnlyFirstLetter(rif.measurementType) + " Min"}
+                        // label={capitalizeOnlyFirstLetter(rif.measurementType) + " Min"}
+                        label={t("arterial_pressure_min")}
                         id="outlined-start-adornment"
                         sx={{ width: 1 }}
                         InputProps={{
@@ -243,7 +246,8 @@ export default function Iarterial_pressure(props: {
                         required
                         disabled={dataDisabled}
                         name="arterial_pressure"
-                        label={capitalizeOnlyFirstLetter(rif.measurementType) + " Max"}
+                        // label={capitalizeOnlyFirstLetter(rif.measurementType) + " Max"}
+                        label={t("arterial_pressure_max")}
                         id="outlined-start-adornment"
                         sx={{ width: 1, mt: 1.5 }}
                         InputProps={{

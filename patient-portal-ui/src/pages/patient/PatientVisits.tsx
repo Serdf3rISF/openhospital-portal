@@ -8,15 +8,9 @@ import ButtonGroup from '@mui/material/ButtonGroup';
 
 import { getTimeLab, getDateLab, compare } from '../../utils/ManageDate';
 import { DefaultAllData } from '../../datajs/DefaultAllData';
-
+import { useTranslation } from "react-i18next";
 let btFilters: string[] = [];
-const columns = [
-  { field: 'r_opd_date', headerName: 'none', hide: true },
-  { field: 'r_opd_id', headerName: 'none', hide: true },
-  { field: 'r_opd_date_date', headerName: 'Data', width: 92, headerClassName: 'super-app-theme--header', sortable: false, disableColumnMenu: true },
-  { field: 'r_opd_date_hour', headerName: 'Hour', width: 56, headerClassName: 'super-app-theme--header', sortable: false, disableColumnMenu: true },
-  { field: 'r_opd_dis_id_a_desc', headerName: 'Diagnosis', width: 160, headerClassName: 'super-app-theme--header', sortable: false, disableColumnMenu: true },
-];
+
 
 
 interface Items {
@@ -29,7 +23,16 @@ interface Items {
 
 
 const PatientVisit = () => {
+  const { t } = useTranslation(["button_pp", "label_pp"]);
+  const columns = [
+    { field: 'r_opd_date', headerName: 'none', hide: true },
+    { field: 'r_opd_id', headerName: 'none', hide: true },
+    { field: 'r_opd_date_date', headerName: t("date", { ns: 'label_pp' }), width: 92, headerClassName: 'super-app-theme--header', sortable: false, disableColumnMenu: true },
+    { field: 'r_opd_date_hour', headerName: t("hour", { ns: 'label_pp' }), width: 56, headerClassName: 'super-app-theme--header', sortable: false, disableColumnMenu: true },
+    { field: 'r_opd_dis_id_a_desc', headerName: t("diagnosis", { ns: 'label_pp' }), width: 160, headerClassName: 'super-app-theme--header', sortable: false, disableColumnMenu: true },
+  ];
   let rows: Items[] = [];
+
   const [rowdata, setRowdata] = useState(rows);
   const [rowdataDef, setRowdataDef] = useState(rows);
   const [type, setType] = React.useState<string | undefined>("All");
@@ -110,9 +113,9 @@ const PatientVisit = () => {
                 id="option-select"
                 value={type}
                 onChange={handleChange}
-               
+
               >
-                <MenuItem value="All" >All</MenuItem>
+                <MenuItem value="All" >{t("all")}</MenuItem>
                 {btFilters.map((bt_el) => (
                   <MenuItem key={bt_el} color="primary" value={bt_el}> <Typography noWrap>{bt_el}</Typography> </MenuItem>
                 ))}

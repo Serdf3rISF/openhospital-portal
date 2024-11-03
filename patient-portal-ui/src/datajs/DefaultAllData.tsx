@@ -235,11 +235,24 @@ export const DefaultAllData = {
 
   },
   getHospitalEventCountNotRead: async function (id_patient: any) {
-    let response = await fetch(url_0 + 'public/hospitalevents/count/read/' + id_patient);
-    const data = await response.json();
-    console.log(data);
-    return data;
-
+    try {
+      let response = await fetch(url_0 + 'public/hospitalevents/count/read/' + id_patient);
+      
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      
+      const data = await response.json();
+      console.log(data);
+      return data;
+    } catch (error) {
+      console.error('Si è verificato un errore:', error);
+      // Puoi gestire l'errore in modo specifico qui, ad esempio:
+      // - Restituire un valore di default
+      // - Lanciare nuovamente l'errore
+      // - Mostrare un messaggio all'utente
+      throw error; // Rilancia l'errore per gestirlo a un livello superiore se necessario
+    }
   },
 
 

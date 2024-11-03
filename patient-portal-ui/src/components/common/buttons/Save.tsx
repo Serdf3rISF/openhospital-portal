@@ -4,6 +4,7 @@ import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert';
 import { useNavigate } from "react-router-dom";
 import SaveIcon from '@mui/icons-material/Save';
+import { useTranslation } from "react-i18next";
 
 const Save = (props: {
   edit?: boolean,
@@ -14,6 +15,7 @@ const Save = (props: {
       // ref={ref}
       variant="filled" {...props} />;
   });
+  const { t } = useTranslation('button_pp');
   const [dataDisabled, setDataDisabled] = useState(false);
   useEffect(() => {
     // --- manage edit
@@ -44,7 +46,7 @@ const Save = (props: {
   return (
 
     <><Button type="submit" form='my-form' disabled={dataDisabled} startIcon={<SaveIcon />} sx={{ mt: 1 }} style={{ justifyContent: "flex-start" }} variant="outlined" size="large" color="primary">
-      Save
+      {t("save")} 
     </Button>
       <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
         <Alert onClose={handleClose} severity="success" sx={{ width: '100%' }}>

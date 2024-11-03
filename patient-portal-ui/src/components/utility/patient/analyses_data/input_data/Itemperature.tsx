@@ -12,7 +12,8 @@ import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import { DefaultAllData } from "../../../../../datajs/DefaultAllData";
 import { capitalizeOnlyFirstLetter, isIsoDate, toIsoDate } from '../../../../../utils/ManageDate';
-import dayjs from 'dayjs'
+import dayjs from 'dayjs';
+import { useTranslation } from "react-i18next";
 
 
 interface ItemperatureProps {
@@ -39,6 +40,7 @@ export default function Itemperature(props: {
   edit?: boolean
   delete?: boolean
 }) {
+  const { t } = useTranslation('label_pp');
   const [data, setData] = React.useState<string | number | Date>(Date.now());
   const navigate = useNavigate();
   const [dateTime, setDateTime] = React.useState<any>(Date.now());
@@ -210,7 +212,8 @@ export default function Itemperature(props: {
             required
             disabled={dataDisabled}
             name="temperature"
-            label={capitalizeOnlyFirstLetter(rif.measurementType)}
+            // label={capitalizeOnlyFirstLetter(rif.measurementType)}
+            label={t("temperature")}
             id="outlined-start-adornment"
             sx={{ width: 1 }}
             InputProps={{

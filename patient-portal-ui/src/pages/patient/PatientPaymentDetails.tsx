@@ -4,6 +4,7 @@ import PatientSmartNav from "../../components/navBars/PatientSmartNav";
 
 import Grid from '@mui/material/Grid';
 
+import { useTranslation } from "react-i18next";
 
 
 function PatientPaymentDetails(props: {
@@ -16,8 +17,7 @@ function PatientPaymentDetails(props: {
     note: boolean | React.ReactChild | React.ReactFragment | React.ReactPortal | null | undefined;
   };
 }) {
-  // console.log("--- props --- PatientPaymentDetails");
-  // console.log(props);
+  const { t } = useTranslation('label_pp');
   return (
     <Container
       maxWidth="lg"
@@ -33,7 +33,7 @@ function PatientPaymentDetails(props: {
       <Grid sx={{ m: 1, width: 1, maxWidth: 500 }} container spacing={2}>
         <Grid xs={6}>
           <Typography style={{ fontWeight: 600 }}>
-            Date pagamento
+          {t("date")}
           </Typography>
           <Typography display="block" variant="button" gutterBottom>
             {props.setType.date}
@@ -41,7 +41,7 @@ function PatientPaymentDetails(props: {
         </Grid>
         <Grid xs={6}>
           <Typography style={{ fontWeight: 600 }}>
-            Time
+          {t("time")}
           </Typography>
           <Typography display="block" variant="button" gutterBottom>
             {props.setType.hour}
@@ -49,7 +49,7 @@ function PatientPaymentDetails(props: {
         </Grid>
         <Grid xs={12}>
           <Typography style={{ fontWeight: 600 }}>
-            Diagnosis
+          {t("diagnosis")}
           </Typography>
           <Typography variant="body1" gutterBottom>
             {props.setType.diagnosis}
@@ -57,7 +57,7 @@ function PatientPaymentDetails(props: {
         </Grid>
         <Grid xs={12}>
           <Typography style={{ fontWeight: 600 }}>
-            Category
+          {t("category")}
           </Typography>
           <Typography variant="subtitle2" gutterBottom>
           {props.setType.value}
@@ -65,7 +65,7 @@ function PatientPaymentDetails(props: {
         </Grid>
         <Grid xs={12}>
           <Typography style={{ fontWeight: 600 }}>
-            Note
+          {t("note")}
           </Typography>
           <Box border={1} sx={{ width: '100%', maxWidth: 500 }}>
 

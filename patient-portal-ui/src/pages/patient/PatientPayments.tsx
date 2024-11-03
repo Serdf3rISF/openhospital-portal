@@ -9,7 +9,7 @@ import { getTimeLab, getDateLab } from '../../utils/ManageDate';
 import { DefaultAllData } from '../../datajs/DefaultAllData'
 
 import Payments from '../../datajs/Payments'
-// let btFilters: string[] = [];
+import { useTranslation } from "react-i18next";
 let btFilters: any[] = [];
 
 
@@ -44,6 +44,7 @@ Object.keys(rows).forEach(function (key: any, value) {
 let rows_def = rows;
 // let rows_def = rows.sort(compare(rows.date_complete));
 const PatientPayments = () => {
+  const { t } = useTranslation('button_pp');
   const [type, setType] = React.useState(null);
   // console.log(type);
   if (type != null) {
@@ -78,7 +79,7 @@ const PatientPayments = () => {
           }}
         >
           <ButtonGroup disableElevation className="button_group_f" sx={{ mt: 1, mb: 1, overflowX: " scroll", }} variant="outlined" aria-label="outlined button group">
-            <Button variant={null === type ? 'contained' : 'outlined'} key="all" color="primary" onClick={() => setType(null)}>All</Button>
+            <Button variant={null === type ? 'contained' : 'outlined'} key="all" color="primary" onClick={() => setType(null)}>{t("all")}</Button>
             {btFilters.map((bt_el) => (
               <Button variant={bt_el === type ? 'contained' : 'outlined'} key={bt_el} color="primary" onClick={() => { setType(bt_el); }}>{bt_el}</Button>
             ))}
