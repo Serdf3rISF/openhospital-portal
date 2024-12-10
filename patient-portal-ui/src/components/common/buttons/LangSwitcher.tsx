@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useState } from "react";
+import { useState, useEffect } from 'react';
 import { Select as BaseSelect, SelectProps, selectClasses, SelectRootSlotProps, } from '@mui/base/Select';
 
 import { Option as BaseOption, optionClasses } from '@mui/base/Option';
@@ -15,40 +15,49 @@ function LangSwitcher() {
   const [country_def_code, setCountry_def_code] = useState("");
 
   const handleLangChange = (value: any) => {
-    // console.log(value);
     setCountry_def_code(value.toLowerCase());
-    if (value == "GB") { value = "en" }
-    // console.log(value.toLowerCase());
-    setLanguage(value.toLowerCase());
-    setCountry_def_label("flag");
-   
     localStorage.setItem("lang", value.toLowerCase());
+    if (value == "GB") { value = "en" }
+    setLanguage(value.toLowerCase());
+    setCountry_def_label("flag");   
     i18n.changeLanguage(value.toLowerCase());
   };
+  // --- Remember the language in local storage
+  useEffect(() => {
+    const storedLang = localStorage.getItem("lang");
+    if (storedLang) {
+      setCountry_def_code(storedLang);
+      let redstoredLang = "";
+      if (redstoredLang == "en") { redstoredLang = "GB" }
+      setLanguage(redstoredLang);
+      setCountry_def_label("flag");
+    }
+  }, []);
 
-  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
-  const open = Boolean(anchorEl);
-  const handleClick = (event: React.MouseEvent<HTMLElement>) => {
-    setAnchorEl(event.currentTarget);
-  };
-  const handleClose = (evt: { target: { value: any; }; }) => {
-    const lang = evt.target.value;
-    // console.log(lang);
-    setLanguage(lang);
-    i18n.changeLanguage(lang);
-    setAnchorEl(null);
-  };
+  // const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  // const open = Boolean(anchorEl);
+  // const handleClick = (event: React.MouseEvent<HTMLElement>) => {
+  //   setAnchorEl(event.currentTarget);
+  // };
+  // const handleClose = (evt: { target: { value: any; }; }) => {
+  //   const lang = evt.target.value;
+  //   setLanguage(lang);
+  //   i18n.changeLanguage(lang);
+  //   setAnchorEl(null);
+  // };
   return (
     <Box>
-      <img
-        loading="lazy"
-        width={20}
-        height={14}
-        style={{ "marginRight": "0.5em" }}
-        srcSet={`https://flagcdn.com/w40/${country_def_code.toLowerCase()}.png 2x`}
-        src={`https://flagcdn.com/w20/${country_def_code.toLowerCase()}.png`}
-        alt={`Flag of ${country_def_label}`}
-      />
+      {country_def_code ? <>
+        <img
+          loading="lazy"
+          width={20}
+          height={14}
+          style={{ "marginRight": "0.5em" }}
+          srcSet={`https://flagcdn.com/w40/${country_def_code.toLowerCase()}.png 2x`}
+          src={`https://flagcdn.com/w20/${country_def_code.toLowerCase()}.png`}
+          alt={`Flag of ${country_def_label}`}
+        />
+      </> : null}
       <Select placeholder="Lang" onChange={(event, value) => handleLangChange(value)}>
         {countries.map((country) => (
           <Option sx={{ zIndex: 9999, width: 100 }} key={country.code} value={country.code} label={country.label}>

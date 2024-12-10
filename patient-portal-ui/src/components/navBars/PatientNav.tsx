@@ -147,7 +147,7 @@ class PatientNav extends Component<any, { main: boolean, setThemeUser: string, h
                                 alignContent: "center"
                             }} >
 
-                                <Divider sx={{ mt: 1, }} />
+                                {/* <Divider sx={{ mt: 1, }} /> */}
                                 <Logout />
                             </Box>
                         </List>
