@@ -193,11 +193,11 @@ export default function Idiuresis_vol_24h(props: {
         <Box sx={style}>
           <div>
             <Typography variant="subtitle1" gutterBottom>
-              Do you want to remove this measure?
+               {t("q_remove")}
             </Typography>
 
-            <Button key="1" color="primary" onClick={() => setDeleteMeasure("y")} >Yes</Button>
-            <Button key="2" color="primary" onClick={() => setDeleteMeasure("n")}>No</Button>
+            <Button key="1" color="primary" onClick={() => setDeleteMeasure("y")} > {t("yes")}</Button>
+            <Button key="2" color="primary" onClick={() => setDeleteMeasure("n")}> {t("no")} </Button>
           </div>
         </Box>
       </Modal>

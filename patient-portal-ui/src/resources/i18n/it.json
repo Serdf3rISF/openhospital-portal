@@ -70,6 +70,18 @@
     "discharge": "Dimissione",
     "in": "Ingresso",
     "out": "Uscita",
-    "hospital": "Ospedale"
+    "hospital": "Ospedale",
+    "insert": "L'immissione",
+    "update": "La modifica",
+    "delete": "La cancellazione",
+    "of": "di",
+    "archived": "è stata archiviato",
+    "and": "e",
+    "was": "è stata",
+    "successfull": "effettuata con successo",
+    "value": "del valore",
+    "q_remove": "Vuoi rimuovere questa misurazione?",
+    "yes": "Si",
+    "no": "No"
   }
 }

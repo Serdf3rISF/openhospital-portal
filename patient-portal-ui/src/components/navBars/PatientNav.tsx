@@ -20,7 +20,6 @@ import Logout from "../common/buttons/Logout";
 import ChangePalette from "../common/buttons/ChangePalette";
 import HospitalID from "../utility/patient/HospitalId";
 import TotalNotReadCount from "../utility/patient/TotalNotReadCount";
-import LangSwitcher_simple from "../common/buttons/LangSwitcher_simple";
 import LangSwitcher from "../common/buttons/LangSwitcher";
 
 interface Items {
@@ -106,11 +105,6 @@ class PatientNav extends Component<any, { main: boolean, setThemeUser: string, h
                                     <TotalNotReadCount id_user={this.props.userId} />
                                 </Typography>
                             </div>
-                            {/* <div style={{ "width": "20%", margin: "2px 0px 0px 0px", }} > */}
-                                {/* <Flags.GB title="United Kingdom" /> */}
-                                {/* <LangSwitcher_simple />
-                                <LangSwitcher  />
-                            </div> */}
                         </Stack>
                     </Box>
                 </AccordionSummary>

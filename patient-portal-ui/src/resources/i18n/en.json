@@ -72,6 +72,19 @@
     "discharge": "Discharge",
     "in": "In",
     "out": "Out",
-    "hospital": "Hospital"
+    "hospital": "Hospital",
+    "insert": "Insert",
+    "update": "Update",
+    "delete": "Delete",
+    "of": "of",
+    "archived": "archived",
+    "and": "and",
+    "was": "was",
+    "successfull": "successfull",
+    "value": "value",
+    "q_remove": "Do you want to remove this measure?",
+    "yes": "Yes",
+    "no": "No"
+
   }
 }

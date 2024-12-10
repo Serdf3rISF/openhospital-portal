@@ -36,11 +36,11 @@ interface Items {
 
 
 const PatientMeasurements = () => {
-  const {t} = useTranslation(["button_pp","label_pp"]);
+  const { t } = useTranslation(["button_pp", "label_pp"]);
   const columns = [
     { field: 'date_time', headerName: '', hide: true, sortable: false, disableColumnMenu: true },
     { field: 'r_id', headerName: '', hide: true, sortable: false, disableColumnMenu: true },
-    { field: 'date', headerName:  t("date", { ns: 'label_pp' }), width: 100, headerClassName: 'super-app-theme--header', sortable: false, disableColumnMenu: true },
+    { field: 'date', headerName: t("date", { ns: 'label_pp' }), width: 100, headerClassName: 'super-app-theme--header', sortable: false, disableColumnMenu: true },
     { field: 'hour', headerName: t("hour", { ns: 'label_pp' }), width: 60, headerClassName: 'super-app-theme--header', sortable: false, disableColumnMenu: true },
     { field: 'misure', headerName: t("misure", { ns: 'label_pp' }), width: 140, headerClassName: 'super-app-theme--header', sortable: false, disableColumnMenu: true }
   ];
@@ -66,14 +66,26 @@ const PatientMeasurements = () => {
 
       const data = location.state.res;
       let message = "";
+      console.log(data.type);
+      if (data.type == "Insert") {
+        message += t("insert", { ns: 'label_pp' });
+      }
+      if (data.type == "Update") {
+        message += t("update", { ns: 'label_pp' });
+      }
       if (data.type == "Delete") {
-        message += data.type + " of " + data.recordType.measurementType + " was successful.";
+        message += t("delete", { ns: 'label_pp' });
+      }
+      if (data.type == "Delete") {
+        // message += " " + t("of", { ns: 'label_pp' }) +" " +  data.recordType.measurementType + " " + t("was", { ns: 'label_pp' }) + " " + t("successfull", { ns: 'label_pp' });
+        message +=  " " + t("was", { ns: 'label_pp' }) + " " + t("successfull", { ns: 'label_pp' });
       } else {
-        message += data.type + " value " + data.value1;
+        message += " " + t("value", { ns: 'label_pp' }) + " " + data.value1;
         if (data.value2 != -1) {
-          message += " and value " + data.value2;
+          message += t("and", { ns: 'label_pp' }) + " " + t("value", { ns: 'label_pp' }) + " " + data.value2;
         }
-        message += " of " + data.recordType.measurementType + " archived.";
+        // message += " " + t("of", { ns: 'label_pp' }) + " " + data.recordType.measurementType + " " + t("archived", { ns: 'label_pp' });
+        message += " " + t("archived", { ns: 'label_pp' });
       }
       setLoadSnackBar(true);
       setMessageSnackBar(message);

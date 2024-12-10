@@ -89,9 +89,9 @@ const LoginForm = ({ setAuth, setProfile, setIdPatient }) => {
         }
         let user_id = res.patientId;
         // let user_id=res.patientId;
-        console.log(res);
-        amb = "Patient"; // --- TODO eliminate
-        setAuth(true); // --- TODO eliminate
+        // console.log(res);
+        // amb = "Patient"; // --- TODO eliminate
+        // setAuth(true); // --- TODO eliminate
         
         let lang = localStorage.getItem('lang');// --- clear all local storage except lang
         localStorage.clear();// --- clear all local storage except lang
