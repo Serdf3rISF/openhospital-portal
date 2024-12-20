@@ -80,7 +80,7 @@ const PatientExams = () => {
           r_lab_date_hour: getTimeLab(k.LAB_DATE),
           r_exc_desc: g_exc_desc,
           r_lab_status: k.LAB_STATUS,
-          r_exa_desc: g_exa_desc,
+          r_exa_desc: t(g_exa_desc),
           r_lab_res: k.LAB_RES,
           r_lab_last_modified_date_date: getDateLab(k.LAB_LAST_MODIFIED_DATE),
           r_lab_last_modified_date_time: getTimeLab(k.LAB_LAST_MODIFIED_DATE),
@@ -97,6 +97,8 @@ const PatientExams = () => {
   useEffect(() => {
     if (type != "All") {
       rows = rowdata.filter(function (el) {
+        
+        console.log(el);
         return el.r_exa_desc == type
       });
 
@@ -141,7 +143,7 @@ const PatientExams = () => {
               >
                 <MenuItem value="All" >{t("all")}</MenuItem>
                 {btFilters.map((bt_el) => (
-                  <MenuItem key={bt_el} color="primary" value={bt_el}> <Typography noWrap>{bt_el}</Typography> </MenuItem>
+                  <MenuItem key={bt_el} color="primary" value={bt_el}> <Typography noWrap>{t(bt_el)}</Typography> </MenuItem>
                 ))}
               </Select>
             </FormControl>

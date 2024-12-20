@@ -108,7 +108,7 @@ export default function Iascultation(props: {
 
       DefaultAllData.deleteMeasurement(id_measure, "ascultation").then((res) => {
 
- 
+
         navigate('/PatientMeasurements',
           {
             state: {
@@ -156,7 +156,7 @@ export default function Iascultation(props: {
                 }
               });
           });
-        }  else {
+        } else {
           //console.log("update");
           DefaultAllData.getMeasurementbyId(ins_upd).then((res_all) => {
             //console.log(res_all);
@@ -188,7 +188,7 @@ export default function Iascultation(props: {
         <Box sx={style}>
           <div>
             <Typography variant="subtitle1" gutterBottom>
-               {t("q_remove")}
+              {t("q_remove")}
             </Typography>
 
             <Button key="1" color="primary" onClick={() => setDeleteMeasure("y")} > {t("yes")}</Button>
@@ -215,7 +215,7 @@ export default function Iascultation(props: {
           >
             {optionSel.map((option: any) => (
               <MenuItem key={option.value} value={option.value}>
-                {option.label}
+                {t(option.label)}
               </MenuItem>
             ))}
           </TextField>

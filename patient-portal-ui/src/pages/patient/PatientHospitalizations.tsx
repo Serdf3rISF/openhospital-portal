@@ -70,7 +70,7 @@ const PatientHospitalizations = () => {
           r_adm_date_adm: k.ADM_DATE_ADM,
           r_adm_date_adm_date: getDateLab(k.ADM_DATE_ADM),
           r_adm_date_adm_hour: getTimeLab(k.ADM_DATE_ADM),
-          r_adm_in_dis_id_a_desc: k.ADM_IN_DIS_ID_A_DESC,
+          r_adm_in_dis_id_a_desc: t(k.ADM_IN_DIS_ID_A_DESC),
           r_adm_out_dis_id_a_desc: k.ADM_OUT_DIS_ID_A_DESC,
           r_adm_date_dis_date: getDateLab(k.ADM_DATE_DIS),
           r_adm_date_dis_hour: getTimeLab(k.ADM_DATE_DIS),
@@ -130,7 +130,7 @@ const PatientHospitalizations = () => {
   useEffect(() => {
     if (type != "All") {
       rows = rowdata.filter(function (el) {
-        return el.r_adm_in_dis_id_a_desc == type
+        return el.r_adm_out_dis_id_a_desc == type
       });
 
       setRowdataDef(rows);
@@ -175,7 +175,7 @@ const PatientHospitalizations = () => {
               >
                 <MenuItem value="All" >{t("all")}</MenuItem>
                 {btFilters.map((bt_el) => (
-                  <MenuItem key={bt_el} color="primary" value={bt_el}> <Typography noWrap>{bt_el}</Typography> </MenuItem>
+                  <MenuItem key={bt_el} color="primary" value={bt_el}> <Typography noWrap>{t(bt_el)}</Typography> </MenuItem>
                 ))}
               </Select>
             </FormControl>

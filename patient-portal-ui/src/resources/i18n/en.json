@@ -13,7 +13,22 @@
     "log_out": "log out",
     "all": "All",
     "save": "Save",
-    "hemoglucosetest": "Hemo Glucose Test"
+    "hemoglucosetest": "Hemo Glucose Test",    
+
+    "BOWEL": "BOWEL",
+    "HEIGHT": "HEIGHT",
+    "WEIGHT": "WEIGHT",
+    "HR": "HR",
+    "BLOOD_PRESSURE": "BLOOD PRESSURE",
+
+    "Gastro-intestinal DISEASEss (non infective)": "Gastro-intestinal DISEASEss (non infective)",
+    "Other cardio-vascular DISEASEs": "Other cardio-vascular DISEASEs", 
+
+    "Diarrhoea-Not bloody": "Diarrhoea-Not bloody", 
+
+    "3.1 Blood Slide (Malaria)": "3.1 Blood Slide (Malaria)", 
+    "URINALYSIS": "URINALYSIS"
+
   },
   "examination": {
     "auscultation": "Auscultation",
@@ -43,6 +58,7 @@
     "amount": "Total",
     "date": "Date",
     "hour": "hour",
+    "time": "Time",
     "misure": "Misure",
     "diagnosis": "Diagnosis",
     "exam": "Exam",
@@ -84,7 +100,29 @@
     "value": "value",
     "q_remove": "Do you want to remove this measure?",
     "yes": "Yes",
-    "no": "No"
+    "no": "No",    
+    
+    "Regular": "Regular",
+    "Irregular": "Irregular",
+    "Constipation": "Constipation",
+    "Diarrheal": "Diarrheal",
 
+    "Physiological": "Physiological",
+    "Oliguria": "Oliguria",
+    "Anuria": "Anuria",
+    "Frequent": "Frequent",
+    "Nocturia": "Nocturia",
+    "Stranguria": "Stranguria",
+    "Pyuria": "Pyuria",
+
+    "Normal": "Normal",
+    "Wheezes": "Wheezes",
+    "Rhonchi": "Rhonchi",
+    "Crackles": "Crackles",
+    "Stridor": "Stridor",
+    "Bronchial": "Bronchial"
+
+  },
+  "label_ep": {
   }
 }

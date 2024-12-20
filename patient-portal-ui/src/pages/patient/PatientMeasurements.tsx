@@ -108,7 +108,7 @@ const PatientMeasurements = () => {
           date: getDateLab(k.recordDate),
           hour: getTimeLab(k.recordDate),
           value: k.value1,
-          misure: k.recordType.measurementType,
+          misure:t(k.recordType.measurementType),
           type: k.recordType.measurementType.toLowerCase(),
           code: k.recordType.code,
           defaultOptionValue: k.recordType.defaultOptionValue,
@@ -141,8 +141,9 @@ const PatientMeasurements = () => {
 
   useEffect(() => {
     if (type != "All") {
+    
       rows = rowdata.filter(function (el) {
-        return el.misure == type
+        return el.measurementType == type
       });
 
       setRowdataDef(rows);
@@ -198,7 +199,7 @@ const PatientMeasurements = () => {
               >
                 <MenuItem value="All" >{t("all")}</MenuItem>
                 {btFilters.map((bt_el) => (
-                  <MenuItem key={bt_el} color="primary" value={bt_el}> <Typography noWrap>{bt_el}</Typography> </MenuItem>
+                  <MenuItem key={bt_el} color="primary" value={bt_el}> <Typography noWrap> {t(bt_el)}</Typography> </MenuItem>
                 ))}
               </Select>
             </FormControl>

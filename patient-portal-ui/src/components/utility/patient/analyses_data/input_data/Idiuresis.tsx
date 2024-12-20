@@ -210,7 +210,7 @@ export default function Idiuresis(props: {
           >
             {optionSel.map((option: any) => (
               <MenuItem key={option.value} value={option.value}>
-                {option.label}
+                 {t(option.label)}
               </MenuItem>
             ))}
           </TextField>

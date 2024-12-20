@@ -63,7 +63,7 @@ const PatientVisit = () => {
           r_opd_date_date: getDateLab(k.OPD_DATE),
           r_opd_date_hour: getTimeLab(k.OPD_DATE),
           r_opd_dis_id_a_type_desc: k.OPD_DIS_ID_A_TYPE_DESC,
-          r_opd_dis_id_a_desc: k.OPD_DIS_ID_A_DESC,
+          r_opd_dis_id_a_desc:t(k.OPD_DIS_ID_A_DESC), 
           r_opd_note: k.OPD_NOTE,
         });
       });
@@ -76,6 +76,9 @@ const PatientVisit = () => {
   useEffect(() => {
     if (type != "All") {
       rows = rowdata.filter(function (el) {
+        
+        console.log(el);
+        console.log(type);
         return el.r_opd_dis_id_a_desc == type
       });
       setRowdataDef(rows);
@@ -117,7 +120,7 @@ const PatientVisit = () => {
               >
                 <MenuItem value="All" >{t("all")}</MenuItem>
                 {btFilters.map((bt_el) => (
-                  <MenuItem key={bt_el} color="primary" value={bt_el}> <Typography noWrap>{bt_el}</Typography> </MenuItem>
+                  <MenuItem key={bt_el} color="primary" value={bt_el}> <Typography noWrap>{t(bt_el)}</Typography> </MenuItem>
                 ))}
               </Select>
             </FormControl>
