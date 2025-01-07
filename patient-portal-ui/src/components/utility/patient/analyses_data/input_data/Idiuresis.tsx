@@ -128,7 +128,7 @@ export default function Idiuresis(props: {
     let inputValue = event.target.diuresis.value;
     if (inputValue == null) {
       setDataError(true);
-      setDataErrorMessage("Il valore non può essere vuoto")
+      setDataErrorMessage(t("ErrorMessageNotEmpty"))
     } else {
       setDataError(false);
       setDataErrorMessage("");

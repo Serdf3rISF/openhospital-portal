@@ -19,6 +19,7 @@ interface Items {
   r_opd_date_date?: string;
   r_opd_date_hour?: string;
   r_opd_dis_id_a_desc?: string;
+  r_filter?: string;
 }
 
 
@@ -65,6 +66,7 @@ const PatientVisit = () => {
           r_opd_dis_id_a_type_desc: k.OPD_DIS_ID_A_TYPE_DESC,
           r_opd_dis_id_a_desc:t(k.OPD_DIS_ID_A_DESC), 
           r_opd_note: k.OPD_NOTE,
+          r_filter: k.OPD_DIS_ID_A_DESC,
         });
       });
 
@@ -76,10 +78,7 @@ const PatientVisit = () => {
   useEffect(() => {
     if (type != "All") {
       rows = rowdata.filter(function (el) {
-        
-        console.log(el);
-        console.log(type);
-        return el.r_opd_dis_id_a_desc == type
+        return el.r_filter == type
       });
       setRowdataDef(rows);
     } else {

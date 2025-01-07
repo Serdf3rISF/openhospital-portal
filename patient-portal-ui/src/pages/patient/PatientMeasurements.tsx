@@ -32,6 +32,7 @@ interface Items {
   measurementValueType?: string;
   minValue: number | string;
   uom?: string;
+  r_filter?: string;
 }
 
 
@@ -78,7 +79,7 @@ const PatientMeasurements = () => {
       }
       if (data.type == "Delete") {
         // message += " " + t("of", { ns: 'label_pp' }) +" " +  data.recordType.measurementType + " " + t("was", { ns: 'label_pp' }) + " " + t("successfull", { ns: 'label_pp' });
-        message +=  " " + t("was", { ns: 'label_pp' }) + " " + t("successfull", { ns: 'label_pp' });
+        message += " " + t("was", { ns: 'label_pp' }) + " " + t("successfull", { ns: 'label_pp' });
       } else {
         message += " " + t("value", { ns: 'label_pp' }) + " " + data.value1;
         if (data.value2 != -1) {
@@ -108,7 +109,7 @@ const PatientMeasurements = () => {
           date: getDateLab(k.recordDate),
           hour: getTimeLab(k.recordDate),
           value: k.value1,
-          misure:t(k.recordType.measurementType),
+          misure: t(k.recordType.measurementType),
           type: k.recordType.measurementType.toLowerCase(),
           code: k.recordType.code,
           defaultOptionValue: k.recordType.defaultOptionValue,
@@ -120,7 +121,8 @@ const PatientMeasurements = () => {
           minValue: k.recordType.minValue,
           uom: k.recordType.uom,
           r_id: k.id,
-          date_time: k.recordDate
+          date_time: k.recordDate,
+          r_filter: k.recordType.measurementType,
         });
         //   console.log(Object.keys(k));
         //   [
@@ -141,9 +143,10 @@ const PatientMeasurements = () => {
 
   useEffect(() => {
     if (type != "All") {
-    
+
       rows = rowdata.filter(function (el) {
-        return el.measurementType == type
+        console.log(el);
+        return el.r_filter == type
       });
 
       setRowdataDef(rows);
@@ -244,6 +247,7 @@ const PatientMeasurements = () => {
             initialState={{
             }}
             columnVisibilityModel={{
+              date_time: false,
               r_id: false,
             }}
             sortModel={[{

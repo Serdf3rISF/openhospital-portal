@@ -19,7 +19,7 @@ function LangSwitcher() {
     localStorage.setItem("lang", value.toLowerCase());
     if (value == "GB") { value = "en" }
     setLanguage(value.toLowerCase());
-    setCountry_def_label("flag");   
+    setCountry_def_label("flag");
     i18n.changeLanguage(value.toLowerCase());
   };
   // --- Remember the language in local storage
@@ -47,17 +47,17 @@ function LangSwitcher() {
   // };
   return (
     <Box>
-      {country_def_code ? <>
+      {(country_def_code && country_def_code !== 'null') ? (
         <img
           loading="lazy"
           width={20}
           height={14}
-          style={{ "marginRight": "0.5em" }}
+          style={{ marginRight: "0.5em" }}
           srcSet={`https://flagcdn.com/w40/${country_def_code.toLowerCase()}.png 2x`}
           src={`https://flagcdn.com/w20/${country_def_code.toLowerCase()}.png`}
           alt={`Flag of ${country_def_label}`}
         />
-      </> : null}
+      ) : null}
       <Select placeholder="Lang" onChange={(event, value) => handleLangChange(value)}>
         {countries.map((country) => (
           <Option sx={{ zIndex: 9999, width: 100 }} key={country.code} value={country.code} label={country.label}>

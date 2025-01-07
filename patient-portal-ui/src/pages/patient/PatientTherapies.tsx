@@ -19,6 +19,7 @@ interface Items {
   value?: string;
   misure?: string;
   type?: string;
+  r_filter?: string;
 }
 const PatientTherapies = () => {
   const { t } = useTranslation(["button_pp", "label_pp"]);
@@ -59,7 +60,8 @@ const PatientTherapies = () => {
           misure: k.payload,
           type: k.payload,
           r_id: k.id,
-          date_time: k.date
+          date_time: k.date,
+          r_filter: k.value1,
         });
         // console.log(Object.keys(k));
       });
@@ -70,7 +72,7 @@ const PatientTherapies = () => {
   useEffect(() => {
     if (type != "All") {
       rows = rowdata.filter(function (el) {
-        return el.misure == type
+        return el.r_filter == type
       });
 
       setRowdataDef(rows);

@@ -13,8 +13,13 @@
     "log_out": "log out",
     "all": "All",
     "save": "Save",
-    "hemoglucosetest": "Hemo Glucose Test",    
-
+    "hemoglucosetest": "Hemo Glucose Test",   
+    
+    "DIURESIS": "DIURESIS",
+    "DIURESIS_VOL": "DIURESIS VOL",
+    "AUSCULTATION": "AUSCULTATION",
+    "SATURATION": "SATURATION",
+    "TEMPERATURE": "TEMPERATURE",
     "BOWEL": "BOWEL",
     "HEIGHT": "HEIGHT",
     "WEIGHT": "WEIGHT",
@@ -120,7 +125,11 @@
     "Rhonchi": "Rhonchi",
     "Crackles": "Crackles",
     "Stridor": "Stridor",
-    "Bronchial": "Bronchial"
+    "Bronchial": "Bronchial",
+
+    "ErrorMessageNotEmpty": "The value cannot be empty",
+    "ErrorMessageMin": "The value must be less than ",
+    "ErrorMessageMax": "The value must be greater than "
 
   },
   "label_ep": {

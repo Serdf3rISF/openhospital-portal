@@ -134,21 +134,21 @@ export default function Iarterial_pressure(props: {
         setDataErrorMin(false);
         if (dataMin == null) {
             setDataErrorMin(true);
-            setDataErrorMessageMin("Il valore non può essere vuoto")
+            setDataErrorMessageMin(t("ErrorMessageNotEmpty"))
         } else if (dataMax == null) {
             setDataErrorMax(true);
-            setDataErrorMessageMax("Il valore non può essere vuoto")
+            setDataErrorMessageMax(t("ErrorMessageNotEmpty"))
         } else if (Number(dataMin) <= Number(rif.minValue)) {
             setDataErrorMin(true);
-            setDataErrorMessageMin("Il valore deve essere maggiore di " + rif.minValue)
+            setDataErrorMessageMin(t("ErrorMessageMax") + rif.minValue)
         } else if (Number(dataMax) >= Number(rif.maxValue)) {
             setDataErrorMax(true);
-            setDataErrorMessageMax("Il valore deve essere minore di " + rif.maxValue)
+            setDataErrorMessageMax(t("ErrorMessageMin")  + rif.maxValue)
         } else if (Number(dataMin) >= Number(dataMax)) {
             setDataErrorMax(true);
             setDataErrorMin(true);
-            setDataErrorMessageMax("Il valore deve essere maggiore di " + dataMin)
-            setDataErrorMessageMin("Il valore deve essere minore di " + dataMax)
+            setDataErrorMessageMax(t("ErrorMessageMax")  + dataMin)
+            setDataErrorMessageMin(t("ErrorMessageMin")  + dataMax)
         } else {
             setDataErrorMax(false);
             setDataErrorMin(false);

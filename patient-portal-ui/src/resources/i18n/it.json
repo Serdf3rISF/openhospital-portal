@@ -12,20 +12,21 @@
     "log_out": "Esci",
     "all": "Tutto",
     "save": "Salva",
-    "hemoglucosetest": "Emoglucosio test",     
-
+    "hemoglucosetest": "Emoglucosio test",
+    "DIURESIS": "DIURESI",
+    "DIURESIS_VOL": "DIURESI VOL",
+    "AUSCULTATION": "AUSCULTAZIONE",
+    "SATURATION": "SATURAZIONE",
+    "TEMPERATURE": "TEMPERATURA",
     "BOWEL": "INTESTINALE",
     "HEIGHT": "ALTEZZA",
     "WEIGHT": "PESO",
     "HR": "HR",
     "BLOOD_PRESSURE": "PRESSIONE SANGUIGNA",
-
     "Gastro-intestinal DISEASEss (non infective)": "MALATTIE Gastro-intestinali (non infettive)",
-    "Other cardio-vascular DISEASEs": "Altre MALATTIE cardiovascolari", 
-
-    "Diarrhoea-Not bloody": "Diarrea: non sanguinante", 
-
-    "3.1 Blood Slide (Malaria)": "3.1 Vetrino di sangue (malaria)", 
+    "Other cardio-vascular DISEASEs": "Altre MALATTIE cardiovascolari",
+    "Diarrhoea-Not bloody": "Diarrea: non sanguinante",
+    "3.1 Blood Slide (Malaria)": "3.1 Vetrino di sangue (malaria)",
     "URINALYSIS": "Analisi delle urine"
   },
   "examination": {
@@ -97,13 +98,11 @@
     "value": "del valore",
     "q_remove": "Vuoi rimuovere questa misurazione?",
     "yes": "Si",
-    "no": "No",   
-
+    "no": "No",
     "Regular": "Regolare",
     "Irregular": "Irregolare",
     "Constipation": "Constipazione",
     "Diarrheal": "Diarrea",
-
     "Physiological": "Fisiologica",
     "Oliguria": "Oliguria",
     "Anuria": "Anuria",
@@ -111,12 +110,15 @@
     "Nocturia": "Nicturia",
     "Stranguria": "Stranguria",
     "Pyuria": "Piuria",
-
     "Normal": "Normale",
     "Wheezes": "Sibili",
     "Rhonchi": "Ronchi",
     "Crackles": "Crepitio",
     "Stridor": "Stridore",
-    "Bronchial": "Bronchiale"
+    "Bronchial": "Bronchiale",
+
+    "ErrorMessageNotEmpty": "Il valore non può essere vuoto",
+    "ErrorMessageMin": "Il valore deve essere minore di ",
+    "ErrorMessageMax": "Il valore deve essere maggiore di "
   }
 }

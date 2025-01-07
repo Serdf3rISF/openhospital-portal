@@ -20,6 +20,7 @@ interface Items {
   value?: string;
   misure?: string;
   type?: string;
+  r_filter?: string;
 }
 const PatientVaccinations = () => {
   const { t } = useTranslation(["button_pp", "label_pp"]);
@@ -38,7 +39,7 @@ const PatientVaccinations = () => {
   const handleChange = (event: SelectChangeEvent) => {
     setType(event.target.value as string);
   };
-  let rows_def: any[] = [];  
+  let rows_def: any[] = [];
   let navigate = useNavigate();
 
 
@@ -61,7 +62,8 @@ const PatientVaccinations = () => {
           misure: k.payload,
           type: k.payload,
           r_id: k.id,
-          date_time: k.date
+          date_time: k.date,
+          r_filter: k.value1,
         });
         // console.log(Object.keys(k));
       });
@@ -72,7 +74,7 @@ const PatientVaccinations = () => {
   useEffect(() => {
     if (type != "All") {
       rows = rowdata.filter(function (el) {
-        return el.misure == type
+        return el.r_filter == type
       });
 
       setRowdataDef(rows);
@@ -106,13 +108,13 @@ const PatientVaccinations = () => {
               // justifyContent="flex-end" # DO NOT USE THIS WITH 'scroll'
             }}
           >
-              <FormControl fullWidth>
+            <FormControl fullWidth>
               <Select
                 labelId="option-select-label"
                 id="option-select"
                 value={type}
                 onChange={handleChange}
-               
+
               >
                 <MenuItem value="All" >{t("all")}</MenuItem>
                 {btFilters.map((bt_el) => (

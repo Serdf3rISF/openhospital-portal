@@ -17,6 +17,7 @@ interface Items {
   r_lab_date_date?: string;
   r_lab_date_hour?: string;
   r_exa_desc?: string;
+  r_filter?: string;
 }
 
 const PatientExams = () => {
@@ -86,6 +87,7 @@ const PatientExams = () => {
           r_lab_last_modified_date_time: getTimeLab(k.LAB_LAST_MODIFIED_DATE),
           r_labr_desc: g_lab_res,
           r_lab_note: k.LAB_NOTE,
+          r_filter: g_exa_desc,
         });
       });
 
@@ -99,7 +101,7 @@ const PatientExams = () => {
       rows = rowdata.filter(function (el) {
         
         console.log(el);
-        return el.r_exa_desc == type
+        return el.r_filter == type
       });
 
       setRowdataDef(rows);

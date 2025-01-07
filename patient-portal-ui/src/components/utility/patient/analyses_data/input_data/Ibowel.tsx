@@ -128,7 +128,7 @@ export default function Ibowel(props: {
     let inputValue = event.target.bowel.value;
     if (inputValue == null) {
       setDataError(true);
-      setDataErrorMessage("Il valore non può essere vuoto")
+      setDataErrorMessage(t("ErrorMessageNotEmpty"))
     } else {
       setDataError(false);
       setDataErrorMessage("");

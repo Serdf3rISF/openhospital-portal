@@ -124,14 +124,14 @@ export default function Iweight(props: {
     let inputValue = event.target.weight.value;
     if (inputValue == null) {
       setDataError(true);
-      setDataErrorMessage("Il valore non può essere vuoto")
+      setDataErrorMessage(t("ErrorMessageNotEmpty"))
     } else if (inputValue <= rif.minValue) {
       setDataError(true);
-      setDataErrorMessage("Il valore deve essere maggiore di " + rif.minValue)
+      setDataErrorMessage(t("ErrorMessageMax") + rif.minValue)
     }
     else if (inputValue >= rif.maxValue) {
       setDataError(true);
-      setDataErrorMessage("Il valore deve essere minore di " + rif.maxValue)
+      setDataErrorMessage(t("ErrorMessageMin") + rif.maxValue)
     } else {
       setDataError(false);
       setDataErrorMessage("");

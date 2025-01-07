@@ -131,7 +131,7 @@ export default function Iascultation(props: {
     let inputValue = event.target.ascultation.value;
     if (inputValue == null) {
       setDataError(true);
-      setDataErrorMessage("Il valore non può essere vuoto")
+      setDataErrorMessage(t("ErrorMessageNotEmpty"))
     } else {
       setDataError(false);
       setDataErrorMessage("");
