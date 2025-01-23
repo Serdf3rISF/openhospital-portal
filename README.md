@@ -47,9 +47,13 @@ First copy `dotenv` to `.env` and set up your variables and locations.
 
 Add in the `hosts` file the following entry `127.0.0.1 develop.ohpp.local api-develop.ohpp.local matomo-develop.ohpp.local`
 
-Export the new .env into variables `export $(grep -E 'ENVIRONMENT_NAME|BASE_DOMAIN' .env | xargs)`
+Export the new .env into variables 
 
-Create the folder structure
+```
+export $(grep -E 'ENVIRONMENT_NAME|BASE_DOMAIN' .env | xargs)
+```
+
+Create the folder structure using the .env variables
 
 ```
 mkdir -p data/$ENVIRONMENT_NAME/database data/$ENVIRONMENT_NAME/database-matomo data/$ENVIRONMENT_NAME/logs/mysql data/$ENVIRONMENT_NAME/logs/mysql-matomo data/$ENVIRONMENT_NAME/logs/nginx data/$ENVIRONMENT_NAME/logs/nginx-matomo data/$ENVIRONMENT_NAME/run data/$ENVIRONMENT_NAME/sql/migrations data/$ENVIRONMENT_NAME/letsencrypt
@@ -61,7 +65,7 @@ mkdir -p data/$ENVIRONMENT_NAME/database data/$ENVIRONMENT_NAME/database-matomo 
 ### 1. build images from sources
 
 ```
-docker compose -f docker-compose-ops.yaml -f docker-compose.yaml build --build-arg ENVIRONMENT_NAME --build-arg BASE_DOMAIN build-api
+docker compose -f docker-compose-ops.yaml -f docker-compose.yaml build --build-arg ENVIRONMENT_NAME --build-arg BASE_DOMAIN build-api --no-cache
 ```
 
 ### 2. copy the DB scripts
@@ -88,17 +92,15 @@ Start MySQL database/service (in background):
 docker compose -f docker-compose-ops.yaml -f docker-compose.yaml up -d mysql
 ```
 
-Start Matomo instance (in background, optional)
+(optional) Start Matomo instance (in background):
 
 ```
-# matomo instance (optional, in background)
 docker compose -f docker-compose-matomo.yaml up -d
 ```
 
-Start the loadbalancer (Traefik), API and UI with output in the terminal. At the first boot, API will create the DB using the scripts copied at **Step 2**.
+Start the Traefik (loadbalancer), API and UI with output in the terminal. At the first boot, API will create the DB using the scripts copied at **Step 2**.
 
 ```
-# the portal (it will create the DB the first time)
 docker compose -f docker-compose-ops.yaml -f docker-compose.yaml up loadbalancer api ui
 ```
 
@@ -138,10 +140,10 @@ To repeat the import, see [Clean the DB only (data)](#clean-the-db-only-data)
 ### 5. available services
 
 
-- API will be available at `https://api-develop.ohpp.local/swagger-ui/` and `http://localhost:18080/swagger-ui/` (use the latter to avoid frontend 'Mixed Content' error)
+- API will be available at `https://api-develop.ohpp.local/swagger-ui/` and `http://localhost:18080/swagger-ui/`
 
-    - use the first one to connect and allow insecure connections for the UI
-    - use the second one to actually call the API
+    - use the first one to connect and allow insecure connections for the swagger UI
+    - use the second one to actually call the API and avoid 'Mixed Content' error
 
 - Patient Portal (UI) will be available at `https://develop.ohpp.local/` 
 
@@ -187,41 +189,51 @@ Use the one you need most.
 
 ### Clean the DB (only data)
 
+With MySQL database/service running, do:
+
 ```
 docker compose -f docker-compose-ops.yaml -f docker-compose.yaml run --rm delete-all-data
 ```
 
-...and reload demo data (optional)
+(optional) reload demo data:
 
 ```
-# (optional) import demo data in the empty DB 
 docker compose -f docker-compose-ops.yaml -f docker-compose.yaml run --rm demo-data
 ```
 
 
 ### Destroy and recreate the DB
 
-```
-# stop api (loadbalancer, matomo and ui can stay)
-docker compose -f docker-compose-ops.yaml -f docker-compose.yaml stop api
+Stop api (loadbalancer, matomo and ui can stay)
 
-# remove mysql container, volumes and folders
+```
+docker compose -f docker-compose-ops.yaml -f docker-compose.yaml stop api
+```
+
+Remove mysql container, volumes and folders
+
+```
 docker compose rm --stop --volumes --force mysql
 docker volume rm oh-patient-portal_mysql_data
 docker volume rm oh-patient-portal_mysql_logs
 rm -rf data/$ENVIRONMENT_NAME/database/*
+```
 
-# restart mysql
+Restart mysql
+
+```
 docker compose -f docker-compose-ops.yaml -f docker-compose.yaml up -d mysql
+```
 
-# restart api (will create the db structure using the already existing scripts at data/$ENVIRONMENT_NAME/sql/migrations)
+Restart api (will create the db structure using the already existing scripts at data/$ENVIRONMENT_NAME/sql/migrations)
+
+```
 docker compose -f docker-compose-ops.yaml -f docker-compose.yaml up -d api
 ```
 
-...and reload demo data (optional)
+(optional) Reload demo data
 
 ```
-# (optional) import demo data in the empty DB 
 docker compose -f docker-compose-ops.yaml -f docker-compose.yaml run --rm demo-data
 ```
 
