@@ -12,7 +12,8 @@ import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import { DefaultAllData } from "../../../../../datajs/DefaultAllData";
 import { capitalizeOnlyFirstLetter, isIsoDate, toIsoDate } from '../../../../../utils/ManageDate';
-import dayjs from 'dayjs'
+import dayjs from 'dayjs';
+import { useTranslation } from "react-i18next";
 
 interface Iarterial_pressureProps {
     code?: string;
@@ -40,6 +41,7 @@ export default function Iarterial_pressure(props: {
     edit?: boolean
     delete?: boolean
 }) {
+    const { t } = useTranslation('label_pp');
     const [dataMin, setDataMin] = React.useState<any>(0);
     const [dataMax, setDataMax] = React.useState<any>(0);
     const navigate = useNavigate();
@@ -132,21 +134,21 @@ export default function Iarterial_pressure(props: {
         setDataErrorMin(false);
         if (dataMin == null) {
             setDataErrorMin(true);
-            setDataErrorMessageMin("Il valore non può essere vuoto")
+            setDataErrorMessageMin(t("ErrorMessageNotEmpty"))
         } else if (dataMax == null) {
             setDataErrorMax(true);
-            setDataErrorMessageMax("Il valore non può essere vuoto")
+            setDataErrorMessageMax(t("ErrorMessageNotEmpty"))
         } else if (Number(dataMin) <= Number(rif.minValue)) {
             setDataErrorMin(true);
-            setDataErrorMessageMin("Il valore deve essere maggiore di " + rif.minValue)
+            setDataErrorMessageMin(t("ErrorMessageMax") + rif.minValue)
         } else if (Number(dataMax) >= Number(rif.maxValue)) {
             setDataErrorMax(true);
-            setDataErrorMessageMax("Il valore deve essere minore di " + rif.maxValue)
+            setDataErrorMessageMax(t("ErrorMessageMin")  + rif.maxValue)
         } else if (Number(dataMin) >= Number(dataMax)) {
             setDataErrorMax(true);
             setDataErrorMin(true);
-            setDataErrorMessageMax("Il valore deve essere maggiore di " + dataMin)
-            setDataErrorMessageMin("Il valore deve essere minore di " + dataMax)
+            setDataErrorMessageMax(t("ErrorMessageMax")  + dataMin)
+            setDataErrorMessageMin(t("ErrorMessageMin")  + dataMax)
         } else {
             setDataErrorMax(false);
             setDataErrorMin(false);
@@ -208,11 +210,11 @@ export default function Iarterial_pressure(props: {
                 <Box sx={style}>
                     <div>
                         <Typography variant="subtitle1" gutterBottom>
-                            Do you want to remove this measure?
+                            {t("q_remove")}
                         </Typography>
 
-                        <Button key="1" color="primary" onClick={() => setDeleteMeasure("y")} >Yes</Button>
-                        <Button key="2" color="primary" onClick={() => setDeleteMeasure("n")}>No</Button>
+                        <Button key="1" color="primary" onClick={() => setDeleteMeasure("y")} > {t("yes")}</Button>
+                        <Button key="2" color="primary" onClick={() => setDeleteMeasure("n")}> {t("no")} </Button>
                     </div>
                 </Box>
             </Modal>
@@ -228,7 +230,8 @@ export default function Iarterial_pressure(props: {
                         required
                         disabled={dataDisabled}
                         name="arterial_pressure"
-                        label={capitalizeOnlyFirstLetter(rif.measurementType) + " Min"}
+                        // label={capitalizeOnlyFirstLetter(rif.measurementType) + " Min"}
+                        label={t("arterial_pressure_min")}
                         id="outlined-start-adornment"
                         sx={{ width: 1 }}
                         InputProps={{
@@ -243,7 +246,8 @@ export default function Iarterial_pressure(props: {
                         required
                         disabled={dataDisabled}
                         name="arterial_pressure"
-                        label={capitalizeOnlyFirstLetter(rif.measurementType) + " Max"}
+                        // label={capitalizeOnlyFirstLetter(rif.measurementType) + " Max"}
+                        label={t("arterial_pressure_max")}
                         id="outlined-start-adornment"
                         sx={{ width: 1, mt: 1.5 }}
                         InputProps={{

@@ -12,7 +12,8 @@ import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import { DefaultAllData } from "../../../../../datajs/DefaultAllData";
 import { capitalizeOnlyFirstLetter, isIsoDate, toIsoDate } from '../../../../../utils/ManageDate';
-import dayjs from 'dayjs'
+import dayjs from 'dayjs';
+import { useTranslation } from "react-i18next";
 
 
 interface IweightProps {
@@ -39,6 +40,7 @@ export default function Iweight(props: {
   edit?: boolean
   delete?: boolean
 }) {
+  const { t } = useTranslation('label_pp');
   const [data, setData] = React.useState<string | number | Date>(Date.now());
   const navigate = useNavigate();
   const [dateTime, setDateTime] = React.useState<any>(Date.now());
@@ -123,14 +125,14 @@ export default function Iweight(props: {
     let inputValue = event.target.weight.value;
     if (inputValue == null) {
       setDataError(true);
-      setDataErrorMessage("Il valore non può essere vuoto")
+      setDataErrorMessage(t("ErrorMessageNotEmpty"))
     } else if (inputValue <= rif.minValue) {
       setDataError(true);
-      setDataErrorMessage("Il valore deve essere maggiore di " + rif.minValue)
+      setDataErrorMessage(t("ErrorMessageMax") + rif.minValue)
     }
     else if (inputValue >= rif.maxValue) {
       setDataError(true);
-      setDataErrorMessage("Il valore deve essere minore di " + rif.maxValue)
+      setDataErrorMessage(t("ErrorMessageMin") + rif.maxValue)
     } else {
       setDataError(false);
       setDataErrorMessage("");
@@ -190,11 +192,11 @@ export default function Iweight(props: {
         <Box sx={style}>
           <div>
             <Typography variant="subtitle1" gutterBottom>
-              Do you want to remove this measure?
+               {t("q_remove")}
             </Typography>
 
-            <Button key="1" color="primary" onClick={() => setDeleteMeasure("y")} >Yes</Button>
-            <Button key="2" color="primary" onClick={() => setDeleteMeasure("n")}>No</Button>
+            <Button key="1" color="primary" onClick={() => setDeleteMeasure("y")} > {t("yes")}</Button>
+            <Button key="2" color="primary" onClick={() => setDeleteMeasure("n")}> {t("no")} </Button>
           </div>
         </Box>
       </Modal>
@@ -209,8 +211,9 @@ export default function Iweight(props: {
             onChange={e => setData(e.target.value)}
             required
             disabled={dataDisabled}
-            name="weight"
-            label={capitalizeOnlyFirstLetter(rif.measurementType)}
+            name="lhgt"
+            // label={capitalizeOnlyFirstLetter(rif.measurementType)}            
+            label={t("lhgt")}
             id="outlined-start-adornment"
             sx={{ width: 1 }}
             InputProps={{

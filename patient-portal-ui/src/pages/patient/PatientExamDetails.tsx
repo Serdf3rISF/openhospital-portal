@@ -5,6 +5,7 @@ import HospitalID from '../../components/utility/patient/HospitalId';
 
 import Grid from '@mui/material/Grid';
 
+import { useTranslation } from "react-i18next";
 
 
 function PatientExamDetails(props: {
@@ -25,6 +26,7 @@ function PatientExamDetails(props: {
     r_lab_note: string | null | undefined;
   };
 }) {
+  const { t } = useTranslation('label_pp');
   // console.log(props);
   return (
     <Container
@@ -51,7 +53,7 @@ function PatientExamDetails(props: {
         </Grid>
         <Grid xs={6}>
           <Typography style={{ fontWeight: 600 }}>
-            Date
+            {t("date")}
           </Typography>
           <Typography display="block" variant="button" gutterBottom>
             {props.setType.r_lab_date_date}
@@ -59,7 +61,7 @@ function PatientExamDetails(props: {
         </Grid>
         <Grid xs={6}>
           <Typography style={{ fontWeight: 600 }}>
-            Time
+            {t("time")}
           </Typography>
           <Typography display="block" variant="button" gutterBottom>
             {props.setType.r_lab_date_hour}
@@ -67,7 +69,7 @@ function PatientExamDetails(props: {
         </Grid>
         <Grid xs={6}>
           <Typography style={{ fontWeight: 600 }}>
-            Categoria Esame
+          {t("category")}
           </Typography>
           <Typography display="block" variant="button" gutterBottom>
             {props.setType.r_exc_desc}
@@ -75,7 +77,7 @@ function PatientExamDetails(props: {
         </Grid>
         <Grid xs={6}>
           <Typography style={{ fontWeight: 600 }}>
-            Stato
+          {t("state")}
           </Typography>
           <Typography display="block" variant="button" gutterBottom>
             {props.setType.r_lab_status}
@@ -83,7 +85,7 @@ function PatientExamDetails(props: {
         </Grid>
         <Grid xs={12}>
           <Typography style={{ fontWeight: 600 }}>
-            Esame
+          {t("exam")}
           </Typography>
           <Typography variant="body1" gutterBottom>
             {props.setType.r_exa_desc}
@@ -91,7 +93,7 @@ function PatientExamDetails(props: {
         </Grid>
         <Grid xs={6}>
           <Typography style={{ fontWeight: 600 }}>
-            Esito
+          {t("outcome")}
           </Typography>
           <Typography display="block" variant="button" gutterBottom>
             {props.setType.r_lab_res}
@@ -99,7 +101,7 @@ function PatientExamDetails(props: {
         </Grid>
         <Grid xs={6}>
           <Typography style={{ fontWeight: 600 }}>
-            Data/orario - Esito
+          {t("date")}/{t("time")} - {t("outcome")}
           </Typography>
           <Typography display="block" variant="button" gutterBottom>
             {props.setType.r_lab_last_modified_date_date}
@@ -111,7 +113,7 @@ function PatientExamDetails(props: {
         {props.setType.r_labr_desc ? <>
           <Grid xs={12}>
             <Typography style={{ fontWeight: 600 }}>
-              Risultati multipli
+            {t("multiple_results")}              
             </Typography>
             <Typography variant="body1" gutterBottom>
               {props.setType.r_labr_desc}
@@ -121,7 +123,7 @@ function PatientExamDetails(props: {
         </>}
         <Grid xs={12}>
           <Typography style={{ fontWeight: 600 }}>
-            Note
+          {t("note")}
           </Typography>
           <Box border={1} sx={{ width: '100%', maxWidth: 500 }}>
             <Typography sx={{ m: 1 }} variant="caption" gutterBottom>

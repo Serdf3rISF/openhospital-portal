@@ -2,12 +2,12 @@ import { useTranslation } from "react-i18next";
 
 // const { t } = useTranslation('button_pp');
 export const DefaultPatient = () => {
-  const { t } = useTranslation('translations');
+  const { t } = useTranslation('button_pp');
   const btHomePatient = [
     {
       id: 1,
-      label: t("measurements"),
-      id_label: "Measurements",
+      label: "dddd",
+      id_label: "Measuremendddts",
       to: '/PatientMeasurements',
       locked: false,
       order: 1,

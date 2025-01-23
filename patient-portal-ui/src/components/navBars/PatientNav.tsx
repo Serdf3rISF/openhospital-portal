@@ -35,6 +35,7 @@ interface Items {
 interface IPatientProps {
     data_r?: Items;
 }
+
 class PatientNav extends Component<any, { main: boolean, setThemeUser: string, height_calculated_1: string }> {
     wrapperRef: any;
     constructor(props: Items) {
@@ -48,6 +49,7 @@ class PatientNav extends Component<any, { main: boolean, setThemeUser: string, h
         this.handleClickOutside = this.handleClickOutside.bind(this);
         this.closePanel = this.closePanel.bind(this);
     }
+    
     componentDidMount() {
         document.addEventListener("mousedown", this.handleClickOutside);
         let height_calculated_1_val = window.innerHeight -
@@ -73,6 +75,7 @@ class PatientNav extends Component<any, { main: boolean, setThemeUser: string, h
     render() {
         return (
             <Accordion
+            disableGutters 
                 ref={this.wrapperRef}
                 style={{ "backgroundColor": "rgba(52,52,52,0.0)", "padding": "0em" }}
                 sx={{ verticalAlign: 'top', top: "0px", width: 1, position: 'absolute', zIndex: 'modal' }}
@@ -93,8 +96,7 @@ class PatientNav extends Component<any, { main: boolean, setThemeUser: string, h
                             <div style={{ "width": "20%", margin: "2%" }}>
                                 <Avatar sx={{ width: 50, height: 50 }} alt={this.props.firstName} src="/static/images/avatar/1.jpeg" />
                             </div>
-                            
-                            <div style={{ "width": "65%", margin: "2%" }}>
+                            <div style={{ "width": "56%", margin: "2%" }}>
                                 <Typography color="#fff" variant="h6">
                                     {this.props.firstName} {this.props.secondName}
                                 </Typography>
@@ -103,10 +105,6 @@ class PatientNav extends Component<any, { main: boolean, setThemeUser: string, h
                                     <TotalNotReadCount id_user={this.props.userId} />
                                 </Typography>
                             </div>
-                            <div style={{ "width": "5%", margin: "0px 2px 0px 0px", }} >
-                                {/* <Flags.GB title="United Kingdom" /> */}
-                                <LangSwitcher  />
-                            </div>                          
                         </Stack>
                     </Box>
                 </AccordionSummary>
@@ -118,10 +116,12 @@ class PatientNav extends Component<any, { main: boolean, setThemeUser: string, h
                         sx={{ width: 1, p: 2 }}
                     >
                         <Box sx={{
-                            display: 'flex',
-                            justifyContent: 'flex-end',
+                           display: 'flex',
+                           justifyContent: 'space-between',
+                          
                         }} >
-                            <ChangePalette />
+                            <ChangePalette  />
+                            <LangSwitcher  />
                         </Box>
                         <List sx={{ p: 1 }}>
                             <Oname firstName={this.props.firstName} secondName={this.props.secondName} />
@@ -141,7 +141,7 @@ class PatientNav extends Component<any, { main: boolean, setThemeUser: string, h
                                 alignContent: "center"
                             }} >
 
-                                <Divider sx={{ mt: 1, }} />
+                                {/* <Divider sx={{ mt: 1, }} /> */}
                                 <Logout />
                             </Box>
                         </List>

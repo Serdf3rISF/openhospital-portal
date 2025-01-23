@@ -4,7 +4,7 @@ import Button from '@mui/material/Button';
 import { useTranslation } from "react-i18next";
 
 const Bhgt = () => {
-  const { t } = useTranslation('examination');
+  const { t } = useTranslation('button_pp');
   let misure = {
     id: null,
     type: "hgt",

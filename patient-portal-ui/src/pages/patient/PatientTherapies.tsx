@@ -7,15 +7,9 @@ import ButtonGroup from '@mui/material/ButtonGroup';
 
 import { getTimeLab, getDateLab } from '../../utils/ManageDate';
 import { DefaultAllData } from '../../datajs/DefaultAllData'
-
+import { useTranslation } from "react-i18next";
 let btFilters: string[] = [];
-const columns = [
-  { field: 'date_time', headerName: 'none', hide: true },
-  { field: 'r_id', headerName: 'none', hide: true },
-  { field: 'date', headerName: 'Data', width: 100, headerClassName: 'super-app-theme--header', sortable: false, disableColumnMenu: true },
-  { field: 'hour', headerName: 'Hour', width: 60, headerClassName: 'super-app-theme--header', sortable: false, disableColumnMenu: true },
-  { field: 'type', headerName: 'Therapie', width: 140, headerClassName: 'super-app-theme--header', sortable: false, disableColumnMenu: true },
-];
+
 interface Items {
   id?: string;
   id_measure?: string;
@@ -25,8 +19,17 @@ interface Items {
   value?: string;
   misure?: string;
   type?: string;
+  r_filter?: string;
 }
 const PatientTherapies = () => {
+  const { t } = useTranslation(["button_pp", "label_pp"]);
+  const columns = [
+    { field: 'date_time', headerName: 'none', hide: true },
+    { field: 'r_id', headerName: 'none', hide: true },
+    { field: 'date', headerName: t("date", { ns: 'label_pp' }), width: 100, headerClassName: 'super-app-theme--header', sortable: false, disableColumnMenu: true },
+    { field: 'hour', headerName: t("hour", { ns: 'label_pp' }), width: 60, headerClassName: 'super-app-theme--header', sortable: false, disableColumnMenu: true },
+    { field: 'type', headerName: t("therapies", { ns: 'label_pp' }), width: 140, headerClassName: 'super-app-theme--header', sortable: false, disableColumnMenu: true },
+  ];
   let rows: Items[] = [];
   const [rowdata, setRowdata] = useState(rows);
   const [rowdataDef, setRowdataDef] = useState(rows);
@@ -57,7 +60,8 @@ const PatientTherapies = () => {
           misure: k.payload,
           type: k.payload,
           r_id: k.id,
-          date_time: k.date
+          date_time: k.date,
+          r_filter: k.value1,
         });
         // console.log(Object.keys(k));
       });
@@ -68,7 +72,7 @@ const PatientTherapies = () => {
   useEffect(() => {
     if (type != "All") {
       rows = rowdata.filter(function (el) {
-        return el.misure == type
+        return el.r_filter == type
       });
 
       setRowdataDef(rows);
@@ -80,7 +84,7 @@ const PatientTherapies = () => {
     setLoadComponent(1);
   }, [rowdata, type]);
 
- 
+
   return (
 
     <Container
@@ -103,15 +107,15 @@ const PatientTherapies = () => {
               // justifyContent="flex-end" # DO NOT USE THIS WITH 'scroll'
             }}
           >
-              <FormControl fullWidth>
+            <FormControl fullWidth>
               <Select
                 labelId="option-select-label"
                 id="option-select"
                 value={type}
                 onChange={handleChange}
-               
+
               >
-                <MenuItem value="All" >All</MenuItem>
+                <MenuItem value="All" >{t("all")}</MenuItem>
                 {btFilters.map((bt_el) => (
                   <MenuItem key={bt_el} color="primary" value={bt_el}> <Typography noWrap>{bt_el}</Typography> </MenuItem>
                 ))}
@@ -158,7 +162,8 @@ const PatientTherapies = () => {
 
             initialState={{
             }}
-            columnVisibilityModel={{
+            columnVisibilityModel={{              
+              date_time: false,
               r_id: false,
             }}
             sortModel={[{

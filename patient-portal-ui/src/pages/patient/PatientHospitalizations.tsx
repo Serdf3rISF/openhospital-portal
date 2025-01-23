@@ -7,15 +7,9 @@ import ButtonGroup from '@mui/material/ButtonGroup';
 
 import { getTimeLab, getDateLab } from '../../utils/ManageDate';
 import { DefaultAllData } from '../../datajs/DefaultAllData'
-
+import { useTranslation } from "react-i18next";
 let btFilters: string[] = [];
-const columns = [
-  { field: 'r_adm_date_adm', headerName: 'none', hide: true },
-  { field: 'r_adm_id', headerName: 'none', hide: true },
-  { field: 'r_adm_date_adm_date', headerName: 'Data', width: 100, headerClassName: 'super-app-theme--header', sortable: false, disableColumnMenu: true },
-  { field: 'r_adm_date_adm_hour', headerName: 'Hour', width: 60, headerClassName: 'super-app-theme--header', sortable: false, disableColumnMenu: true },
-  { field: 'r_adm_in_dis_id_a_desc', headerName: 'Diagnosis', width: 140, headerClassName: 'super-app-theme--header', sortable: false, disableColumnMenu: true },
-];
+
 interface Items {
   id?: string;
   id_user?: string;
@@ -33,7 +27,16 @@ interface Items {
   r_adm_note: string;
 }
 const PatientHospitalizations = () => {
+  const {t} = useTranslation(["button_pp","label_pp"]);
+  const columns = [
+    { field: 'r_adm_date_adm', headerName: 'none', hide: true },
+    { field: 'r_adm_id', headerName: 'none', hide: true },
+    { field: 'r_adm_date_adm_date', headerName: t("date", { ns: 'label_pp' }), width: 100, headerClassName: 'super-app-theme--header', sortable: false, disableColumnMenu: true },
+    { field: 'r_adm_date_adm_hour', headerName: t("hour", { ns: 'label_pp' }), width: 60, headerClassName: 'super-app-theme--header', sortable: false, disableColumnMenu: true },
+    { field: 'r_adm_in_dis_id_a_desc', headerName:  t("diagnosis", { ns: 'label_pp' }), width: 140, headerClassName: 'super-app-theme--header', sortable: false, disableColumnMenu: true },
+  ];
   let rows: Items[] = [];
+ 
   const [rowdata, setRowdata] = useState(rows);
   const [rowdataDef, setRowdataDef] = useState(rows);
   const [type, setType] = React.useState<string | undefined>("All");
@@ -67,7 +70,7 @@ const PatientHospitalizations = () => {
           r_adm_date_adm: k.ADM_DATE_ADM,
           r_adm_date_adm_date: getDateLab(k.ADM_DATE_ADM),
           r_adm_date_adm_hour: getTimeLab(k.ADM_DATE_ADM),
-          r_adm_in_dis_id_a_desc: k.ADM_IN_DIS_ID_A_DESC,
+          r_adm_in_dis_id_a_desc: t(k.ADM_IN_DIS_ID_A_DESC),
           r_adm_out_dis_id_a_desc: k.ADM_OUT_DIS_ID_A_DESC,
           r_adm_date_dis_date: getDateLab(k.ADM_DATE_DIS),
           r_adm_date_dis_hour: getTimeLab(k.ADM_DATE_DIS),
@@ -127,7 +130,7 @@ const PatientHospitalizations = () => {
   useEffect(() => {
     if (type != "All") {
       rows = rowdata.filter(function (el) {
-        return el.r_adm_in_dis_id_a_desc == type
+        return el.r_adm_out_dis_id_a_desc == type
       });
 
       setRowdataDef(rows);
@@ -170,9 +173,9 @@ const PatientHospitalizations = () => {
                 onChange={handleChange}
 
               >
-                <MenuItem value="All" >All</MenuItem>
+                <MenuItem value="All" >{t("all")}</MenuItem>
                 {btFilters.map((bt_el) => (
-                  <MenuItem key={bt_el} color="primary" value={bt_el}> <Typography noWrap>{bt_el}</Typography> </MenuItem>
+                  <MenuItem key={bt_el} color="primary" value={bt_el}> <Typography noWrap>{t(bt_el)}</Typography> </MenuItem>
                 ))}
               </Select>
             </FormControl>

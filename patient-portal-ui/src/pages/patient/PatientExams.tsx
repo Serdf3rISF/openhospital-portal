@@ -7,24 +7,31 @@ import ButtonGroup from '@mui/material/ButtonGroup';
 
 import { getTimeLab, getDateLab } from '../../utils/ManageDate';
 import { DefaultAllData } from '../../datajs/DefaultAllData'
-
+import { useTranslation } from "react-i18next";
 let btFilters: string[] = [];
-const columns = [
-  { field: 'r_lab_date', headerName: 'none', hide: true },
-  { field: 'r_lab_id', headerName: 'none', hide: true },
-  { field: 'r_lab_date_date', headerName: 'Data', width: 100, headerClassName: 'super-app-theme--header', sortable: false, disableColumnMenu: true },
-  { field: 'r_lab_date_hour', headerName: 'Hour', width: 60, headerClassName: 'super-app-theme--header', sortable: false, disableColumnMenu: true },
-  { field: 'r_exa_desc', headerName: 'Exam', width: 140, headerClassName: 'super-app-theme--header', sortable: false, disableColumnMenu: true },
-];
+// const  tl  = useTranslation('label_pp.date');
+
 interface Items {
   r_lab_id?: string;
   r_lab_date?: string;
   r_lab_date_date?: string;
   r_lab_date_hour?: string;
   r_exa_desc?: string;
+  r_filter?: string;
 }
+
 const PatientExams = () => {
+  const {t} = useTranslation(["button_pp","label_pp"]);
+  const columns = [
+    { field: 'r_lab_date', headerName: 'none', hide: true },
+    { field: 'r_lab_id', headerName: 'none', hide: true },
+    { field: 'r_lab_date_date', headerName: t("date", { ns: 'label_pp' }), width: 100, headerClassName: 'super-app-theme--header', sortable: false, disableColumnMenu: true },
+    { field: 'r_lab_date_hour', headerName: t("hour", { ns: 'label_pp' }), width: 60, headerClassName: 'super-app-theme--header', sortable: false, disableColumnMenu: true },
+    { field: 'r_exa_desc', headerName: t("exam", { ns: 'label_pp' }), width: 140, headerClassName: 'super-app-theme--header', sortable: false, disableColumnMenu: true },
+  ];
   let rows: Items[] = [];
+
+
   const [rowdata, setRowdata] = useState(rows);
   const [rowdataDef, setRowdataDef] = useState(rows);
   const [type, setType] = React.useState<string | undefined>("All");
@@ -40,7 +47,7 @@ const PatientExams = () => {
     let id_patient = localStorage.getItem("IdPatient");
     let type_code = "E";
     DefaultAllData.getHospitalEventByPatientIdByTypeCode(id_patient, type_code).then((res) => {
-     
+
       res.forEach(function (k_a: any) {
         let k = JSON.parse(k_a.payload);
         let g_exc_desc = "";
@@ -57,7 +64,7 @@ const PatientExams = () => {
           k.LAB_MULTIPLE_RES.forEach(function (k_lr: any) {
             g_lab_res += k_lr.LABR_DESC + ",";
           });
-          g_lab_res =g_lab_res.slice(0, -1)
+          g_lab_res = g_lab_res.slice(0, -1)
         } else {
           g_lab_res = "";
         }
@@ -74,12 +81,13 @@ const PatientExams = () => {
           r_lab_date_hour: getTimeLab(k.LAB_DATE),
           r_exc_desc: g_exc_desc,
           r_lab_status: k.LAB_STATUS,
-          r_exa_desc: g_exa_desc,
+          r_exa_desc: t(g_exa_desc),
           r_lab_res: k.LAB_RES,
           r_lab_last_modified_date_date: getDateLab(k.LAB_LAST_MODIFIED_DATE),
           r_lab_last_modified_date_time: getTimeLab(k.LAB_LAST_MODIFIED_DATE),
           r_labr_desc: g_lab_res,
           r_lab_note: k.LAB_NOTE,
+          r_filter: g_exa_desc,
         });
       });
 
@@ -91,7 +99,9 @@ const PatientExams = () => {
   useEffect(() => {
     if (type != "All") {
       rows = rowdata.filter(function (el) {
-        return el.r_exa_desc == type
+        
+        console.log(el);
+        return el.r_filter == type
       });
 
       setRowdataDef(rows);
@@ -125,17 +135,17 @@ const PatientExams = () => {
               // justifyContent="flex-end" # DO NOT USE THIS WITH 'scroll'
             }}
           >
-              <FormControl fullWidth>
+            <FormControl fullWidth>
               <Select
                 labelId="option-select-label"
                 id="option-select"
                 value={type}
                 onChange={handleChange}
-               
+
               >
-                <MenuItem value="All" >All</MenuItem>
+                <MenuItem value="All" >{t("all")}</MenuItem>
                 {btFilters.map((bt_el) => (
-                  <MenuItem key={bt_el} color="primary" value={bt_el}> <Typography noWrap>{bt_el}</Typography> </MenuItem>
+                  <MenuItem key={bt_el} color="primary" value={bt_el}> <Typography noWrap>{t(bt_el)}</Typography> </MenuItem>
                 ))}
               </Select>
             </FormControl>

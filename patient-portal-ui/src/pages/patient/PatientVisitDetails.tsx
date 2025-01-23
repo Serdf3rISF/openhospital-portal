@@ -6,6 +6,7 @@ import HospitalID from '../../components/utility/patient/HospitalId';
 
 import Grid from '@mui/material/Grid';
 
+import { useTranslation } from "react-i18next";
 
 
 function PatientVisitDetails(props: {
@@ -21,6 +22,7 @@ function PatientVisitDetails(props: {
     r_opd_note: string | null | undefined;
   };
 }) {
+  const { t } = useTranslation('label_pp');
   return (
     <Container
       maxWidth="lg"
@@ -43,7 +45,7 @@ function PatientVisitDetails(props: {
         </Grid>
         <Grid xs={6}>
           <Typography style={{ fontWeight: 600 }}>
-            Date
+          {t("date")}
           </Typography>
           <Typography display="block" variant="button" gutterBottom>
             {props.setType.r_opd_date_date}
@@ -51,7 +53,7 @@ function PatientVisitDetails(props: {
         </Grid>
         <Grid xs={6}>
           <Typography style={{ fontWeight: 600 }}>
-            Time
+          {t("time")}
           </Typography>
           <Typography display="block" variant="button" gutterBottom>
             {props.setType.r_opd_date_hour}
@@ -59,7 +61,7 @@ function PatientVisitDetails(props: {
         </Grid>
         <Grid xs={12}>
           <Typography style={{ fontWeight: 600 }}>
-            Category
+          {t("category")}
           </Typography>
           <Typography variant="subtitle2" gutterBottom>
             {props.setType.r_opd_dis_id_a_type_desc}
@@ -67,7 +69,7 @@ function PatientVisitDetails(props: {
         </Grid>
         <Grid xs={12}>
           <Typography style={{ fontWeight: 600 }}>
-            Diagnosis
+          {t("diagnosis")}
           </Typography>
           <Typography variant="body1" gutterBottom>
             {props.setType.r_opd_dis_id_a_desc}
@@ -75,7 +77,7 @@ function PatientVisitDetails(props: {
         </Grid>
         <Grid xs={12}>
           <Typography style={{ fontWeight: 600 }}>
-            Note
+          {t("note")}
           </Typography>
           <Box border={1} sx={{ width: '100%', maxWidth: 500 }}>
             <Typography sx={{ m: 1 }} variant="caption" gutterBottom>

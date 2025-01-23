@@ -87,9 +87,17 @@ const LoginForm = ({ setAuth, setProfile, setIdPatient }) => {
             setAuth(true);
           }
         }
-        localStorage.clear();
+        let user_id = res.patientId;
+        // let user_id=res.patientId;
+        // console.log(res);
+        // amb = "Patient"; // --- TODO eliminate
+        // setAuth(true); // --- TODO eliminate
+        
+        let lang = localStorage.getItem('lang');// --- clear all local storage except lang
+        localStorage.clear();// --- clear all local storage except lang
+        localStorage.setItem('lang', lang);// --- clear all local storage except lang
         localStorage.setItem("HospitalId", values.username);
-        localStorage.setItem("IdPatient", res.patientId);
+        localStorage.setItem("IdPatient", user_id);
         localStorage.setItem("typeVisualization", "patient");
 
       });

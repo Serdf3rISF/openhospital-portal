@@ -80,7 +80,7 @@ function App(props) {
 
   const [, setLang] = useState(i18n.language);
   const changeLang = (l) => {
-    i18n.changeLanguage(l).then(() => {
+    i18n.changeLanguage(l).then(() => {      
       setLang(l);
     });
   };

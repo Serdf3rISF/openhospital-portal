@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Button, Container, Box } from "@mui/material";
+import { Button, Container, Box, Typography, MenuItem, FormControl, Select, SelectChangeEvent } from "@mui/material";
+
 import PatientSmartNav from "../../components/navBars/PatientSmartNav";
 import { DataGrid } from '@mui/x-data-grid';
 import { useNavigate } from "react-router-dom";
@@ -10,15 +11,9 @@ import Slide from '@mui/material/Slide';
 
 import { getTimeLab, getDateLab } from '../../utils/ManageDate';
 import { DefaultAllData } from '../../datajs/DefaultAllData'
-
+import { useTranslation } from "react-i18next";
 let btFilters: string[] = [];
-const columns = [
-  { field: 'date_time', headerName: '', hide: true, sortable: false, disableColumnMenu: true },
-  { field: 'r_id', headerName: '', hide: true, sortable: false, disableColumnMenu: true },
-  { field: 'date', headerName: 'Data', width: 100, headerClassName: 'super-app-theme--header', sortable: false, disableColumnMenu: true },
-  { field: 'hour', headerName: 'Hour', width: 60, headerClassName: 'super-app-theme--header', sortable: false, disableColumnMenu: true },
-  { field: 'misure', headerName: 'Misure', width: 140, headerClassName: 'super-app-theme--header', sortable: false, disableColumnMenu: true }
-];
+
 interface Items {
   id?: string;
   id_measure?: string;
@@ -37,19 +32,30 @@ interface Items {
   measurementValueType?: string;
   minValue: number | string;
   uom?: string;
+  r_filter?: string;
 }
 
 
 const PatientMeasurements = () => {
+  const { t } = useTranslation(["button_pp", "label_pp"]);
+  const columns = [
+    { field: 'date_time', headerName: '', hide: true, sortable: false, disableColumnMenu: true },
+    { field: 'r_id', headerName: '', hide: true, sortable: false, disableColumnMenu: true },
+    { field: 'date', headerName: t("date", { ns: 'label_pp' }), width: 100, headerClassName: 'super-app-theme--header', sortable: false, disableColumnMenu: true },
+    { field: 'hour', headerName: t("hour", { ns: 'label_pp' }), width: 60, headerClassName: 'super-app-theme--header', sortable: false, disableColumnMenu: true },
+    { field: 'misure', headerName: t("misure", { ns: 'label_pp' }), width: 140, headerClassName: 'super-app-theme--header', sortable: false, disableColumnMenu: true }
+  ];
   let rows: Items[] = [];
-
   const location = useLocation();
   const [loadSnackBar, setLoadSnackBar] = useState(false);
   const [messageSnackBar, setMessageSnackBar] = useState("Default message");
   const [rowdata, setRowdata] = useState(rows);
   const [rowdataDef, setRowdataDef] = useState(rows);
-  const [type, setType] = React.useState<string | null>(null);
+  const [type, setType] = React.useState<string | undefined>("All");
   const [loadComponent, setLoadComponent] = useState(0);
+  const handleChange = (event: SelectChangeEvent) => {
+    setType(event.target.value as string);
+  };
   let rows_def: any[] = [];
   let navigate = useNavigate();
   const handleCloseSnackbar = () => {
@@ -61,14 +67,26 @@ const PatientMeasurements = () => {
 
       const data = location.state.res;
       let message = "";
+      console.log(data.type);
+      if (data.type == "Insert") {
+        message += t("insert", { ns: 'label_pp' });
+      }
+      if (data.type == "Update") {
+        message += t("update", { ns: 'label_pp' });
+      }
       if (data.type == "Delete") {
-        message += data.type + " of " + data.recordType.measurementType + " was successful.";
+        message += t("delete", { ns: 'label_pp' });
+      }
+      if (data.type == "Delete") {
+        // message += " " + t("of", { ns: 'label_pp' }) +" " +  data.recordType.measurementType + " " + t("was", { ns: 'label_pp' }) + " " + t("successfull", { ns: 'label_pp' });
+        message += " " + t("was", { ns: 'label_pp' }) + " " + t("successfull", { ns: 'label_pp' });
       } else {
-        message += data.type + " value " + data.value1;
+        message += " " + t("value", { ns: 'label_pp' }) + " " + data.value1;
         if (data.value2 != -1) {
-          message += " and value " + data.value2;
+          message += t("and", { ns: 'label_pp' }) + " " + t("value", { ns: 'label_pp' }) + " " + data.value2;
         }
-        message += " of " + data.recordType.measurementType + " archived.";
+        // message += " " + t("of", { ns: 'label_pp' }) + " " + data.recordType.measurementType + " " + t("archived", { ns: 'label_pp' });
+        message += " " + t("archived", { ns: 'label_pp' });
       }
       setLoadSnackBar(true);
       setMessageSnackBar(message);
@@ -91,7 +109,7 @@ const PatientMeasurements = () => {
           date: getDateLab(k.recordDate),
           hour: getTimeLab(k.recordDate),
           value: k.value1,
-          misure: k.recordType.measurementType,
+          misure: t(k.recordType.measurementType),
           type: k.recordType.measurementType.toLowerCase(),
           code: k.recordType.code,
           defaultOptionValue: k.recordType.defaultOptionValue,
@@ -103,7 +121,8 @@ const PatientMeasurements = () => {
           minValue: k.recordType.minValue,
           uom: k.recordType.uom,
           r_id: k.id,
-          date_time: k.recordDate
+          date_time: k.recordDate,
+          r_filter: k.recordType.measurementType,
         });
         //   console.log(Object.keys(k));
         //   [
@@ -123,9 +142,11 @@ const PatientMeasurements = () => {
   }, []);
 
   useEffect(() => {
-    if (type != null) {
+    if (type != "All") {
+
       rows = rowdata.filter(function (el) {
-        return el.misure == type
+        console.log(el);
+        return el.r_filter == type
       });
 
       setRowdataDef(rows);
@@ -171,12 +192,26 @@ const PatientMeasurements = () => {
               // justifyContent="flex-end" # DO NOT USE THIS WITH 'scroll'
             }}
           >
-            <ButtonGroup disableElevation className="button_group_f" sx={{ mt: 1, mb: 1, overflowX: "scroll", }} variant="outlined" aria-label="outlined button group">
-              <Button variant={null === type ? 'contained' : 'outlined'} key="all" color="primary" onClick={() => setType(null)}>All</Button>
+            <FormControl fullWidth>
+              <Select
+                labelId="option-select-label"
+                id="option-select"
+                value={type}
+                onChange={handleChange}
+
+              >
+                <MenuItem value="All" >{t("all")}</MenuItem>
+                {btFilters.map((bt_el) => (
+                  <MenuItem key={bt_el} color="primary" value={bt_el}> <Typography noWrap> {t(bt_el)}</Typography> </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+            {/* <ButtonGroup disableElevation className="button_group_f" sx={{ mt: 1, mb: 1, overflowX: "scroll", }} variant="outlined" aria-label="outlined button group">
+              <Button variant={null === type ? 'contained' : 'outlined'} key="all" color="primary" onClick={() => setType(null)}>{t("all")}</Button>
               {btFilters.map((bt_el) => (
                 <Button variant={bt_el === type ? 'contained' : 'outlined'} key={bt_el} color="primary" onClick={() => { setType(bt_el); }}>{bt_el}</Button>
               ))}
-            </ButtonGroup>
+            </ButtonGroup> */}
           </Box>
           <DataGrid
             sx={{
@@ -212,6 +247,7 @@ const PatientMeasurements = () => {
             initialState={{
             }}
             columnVisibilityModel={{
+              date_time: false,
               r_id: false,
             }}
             sortModel={[{

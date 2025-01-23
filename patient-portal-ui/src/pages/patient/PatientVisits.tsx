@@ -8,15 +8,9 @@ import ButtonGroup from '@mui/material/ButtonGroup';
 
 import { getTimeLab, getDateLab, compare } from '../../utils/ManageDate';
 import { DefaultAllData } from '../../datajs/DefaultAllData';
-
+import { useTranslation } from "react-i18next";
 let btFilters: string[] = [];
-const columns = [
-  { field: 'r_opd_date', headerName: 'none', hide: true },
-  { field: 'r_opd_id', headerName: 'none', hide: true },
-  { field: 'r_opd_date_date', headerName: 'Data', width: 92, headerClassName: 'super-app-theme--header', sortable: false, disableColumnMenu: true },
-  { field: 'r_opd_date_hour', headerName: 'Hour', width: 56, headerClassName: 'super-app-theme--header', sortable: false, disableColumnMenu: true },
-  { field: 'r_opd_dis_id_a_desc', headerName: 'Diagnosis', width: 160, headerClassName: 'super-app-theme--header', sortable: false, disableColumnMenu: true },
-];
+
 
 
 interface Items {
@@ -25,11 +19,21 @@ interface Items {
   r_opd_date_date?: string;
   r_opd_date_hour?: string;
   r_opd_dis_id_a_desc?: string;
+  r_filter?: string;
 }
 
 
 const PatientVisit = () => {
+  const { t } = useTranslation(["button_pp", "label_pp"]);
+  const columns = [
+    { field: 'r_opd_date', headerName: 'none', hide: true },
+    { field: 'r_opd_id', headerName: 'none', hide: true },
+    { field: 'r_opd_date_date', headerName: t("date", { ns: 'label_pp' }), width: 92, headerClassName: 'super-app-theme--header', sortable: false, disableColumnMenu: true },
+    { field: 'r_opd_date_hour', headerName: t("hour", { ns: 'label_pp' }), width: 56, headerClassName: 'super-app-theme--header', sortable: false, disableColumnMenu: true },
+    { field: 'r_opd_dis_id_a_desc', headerName: t("diagnosis", { ns: 'label_pp' }), width: 160, headerClassName: 'super-app-theme--header', sortable: false, disableColumnMenu: true },
+  ];
   let rows: Items[] = [];
+
   const [rowdata, setRowdata] = useState(rows);
   const [rowdataDef, setRowdataDef] = useState(rows);
   const [type, setType] = React.useState<string | undefined>("All");
@@ -60,8 +64,9 @@ const PatientVisit = () => {
           r_opd_date_date: getDateLab(k.OPD_DATE),
           r_opd_date_hour: getTimeLab(k.OPD_DATE),
           r_opd_dis_id_a_type_desc: k.OPD_DIS_ID_A_TYPE_DESC,
-          r_opd_dis_id_a_desc: k.OPD_DIS_ID_A_DESC,
+          r_opd_dis_id_a_desc:t(k.OPD_DIS_ID_A_DESC), 
           r_opd_note: k.OPD_NOTE,
+          r_filter: k.OPD_DIS_ID_A_DESC,
         });
       });
 
@@ -73,7 +78,7 @@ const PatientVisit = () => {
   useEffect(() => {
     if (type != "All") {
       rows = rowdata.filter(function (el) {
-        return el.r_opd_dis_id_a_desc == type
+        return el.r_filter == type
       });
       setRowdataDef(rows);
     } else {
@@ -110,11 +115,11 @@ const PatientVisit = () => {
                 id="option-select"
                 value={type}
                 onChange={handleChange}
-               
+
               >
-                <MenuItem value="All" >All</MenuItem>
+                <MenuItem value="All" >{t("all")}</MenuItem>
                 {btFilters.map((bt_el) => (
-                  <MenuItem key={bt_el} color="primary" value={bt_el}> <Typography noWrap>{bt_el}</Typography> </MenuItem>
+                  <MenuItem key={bt_el} color="primary" value={bt_el}> <Typography noWrap>{t(bt_el)}</Typography> </MenuItem>
                 ))}
               </Select>
             </FormControl>

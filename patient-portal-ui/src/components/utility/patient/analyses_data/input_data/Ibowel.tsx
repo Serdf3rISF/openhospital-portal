@@ -12,7 +12,8 @@ import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import { DefaultAllData } from "../../../../../datajs/DefaultAllData";
 import { capitalizeOnlyFirstLetter, isIsoDate, toIsoDate } from '../../../../../utils/ManageDate';
-import dayjs from 'dayjs'
+import dayjs from 'dayjs';
+import { useTranslation } from "react-i18next";
 
 
 interface IbowelProps {
@@ -40,6 +41,7 @@ export default function Ibowel(props: {
   delete?: boolean
   option?: any
 }) {
+  const { t } = useTranslation('label_pp');
   // const [data, setData] = React.useState<string | number | Date>(Date.now());
   const navigate = useNavigate();
   const [dateTime, setDateTime] = React.useState<any>(Date.now());
@@ -126,7 +128,7 @@ export default function Ibowel(props: {
     let inputValue = event.target.bowel.value;
     if (inputValue == null) {
       setDataError(true);
-      setDataErrorMessage("Il valore non può essere vuoto")
+      setDataErrorMessage(t("ErrorMessageNotEmpty"))
     } else {
       setDataError(false);
       setDataErrorMessage("");
@@ -180,11 +182,11 @@ export default function Ibowel(props: {
         <Box sx={style}>
           <div>
             <Typography variant="subtitle1" gutterBottom>
-              Do you want to remove this measure?
+               {t("q_remove")}
             </Typography>
 
-            <Button key="1" color="primary" onClick={() => setDeleteMeasure("y")} >Yes</Button>
-            <Button key="2" color="primary" onClick={() => setDeleteMeasure("n")}>No</Button>
+            <Button key="1" color="primary" onClick={() => setDeleteMeasure("y")} > {t("yes")}</Button>
+            <Button key="2" color="primary" onClick={() => setDeleteMeasure("n")}> {t("no")} </Button>
           </div>
         </Box>
       </Modal>
@@ -199,14 +201,15 @@ export default function Ibowel(props: {
             required
             disabled={dataDisabled}
             name="bowel"
-            label={capitalizeOnlyFirstLetter(rif.measurementType)}
+            // label={capitalizeOnlyFirstLetter(rif.measurementType)}
+            label={t("bowel")}
             id="outlined-start-adornment"
             sx={{ width: 1 }}
             defaultValue={rif.defaultValue1 ? rif.defaultValue1 : ""}
           >
             {optionSel.map((option: any) => (
               <MenuItem key={option.value} value={option.value}>
-                {option.label}
+                 {t(option.label)}
               </MenuItem>
             ))}
           </TextField>

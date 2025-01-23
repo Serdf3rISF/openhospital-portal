@@ -7,9 +7,12 @@ export default function Oage(age: any) {
    const { t } = useTranslation('patient');
    let ageR: string | number = "...";
    let ageB: string | number = "...";
+
    if (age.data != undefined) {
       ageR = getAge(age.data);
-      ageB = age.data.slice(-5);
+      console.log(age.data);
+      // ageB = age.data.slice(-5);
+      ageB =formatDate(age.data);
    }
    return (
       <div>
@@ -34,3 +37,15 @@ function getAge(dateString: string) {
    }
    return age;
 }
+function formatDate(dateString: string) {
+   // Create a Date object from the input string
+   const date = new Date(dateString);
+ 
+   // Extract day, month, and year components
+   const day = date.getDate().toString().padStart(2, '0');
+   const month = (date.getMonth() + 1).toString().padStart(2, '0');
+   const year = date.getFullYear();
+ 
+   // Concatenate the components in the desired format
+   return `${day}-${month}-${year}`;
+ }

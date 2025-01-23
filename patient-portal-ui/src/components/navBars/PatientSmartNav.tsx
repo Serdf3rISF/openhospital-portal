@@ -20,7 +20,7 @@ export default function PatientSmartNav(props: {
 
 
     return (
-        <Box color="primary" sx={{ width: 1, mt: 1, minHeight: '70px' }}>
+        <Box color="primary" sx={{ width: 1, mt: 2, mb: -3, minHeight: '70px' }}>
             <Grid container sx={{ width: 1 }} >
                 <Grid container justifyContent="flex-start" item xs={1.5}>
                     {props.page != 'PatientHome' && props.page != 'PatientAgenda' ? <GoBack /> : null}

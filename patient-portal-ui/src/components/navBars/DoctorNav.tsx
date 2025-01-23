@@ -18,6 +18,7 @@ import Logout from "../common/buttons/Logout";
 import ChangePassword from "../common/buttons/ChangePassword";
 import ManageProfile from "../common/buttons/ManageProfile";
 import ChangePalette from "../common/buttons/ChangePalette";
+import LangSwitcher from "../common/buttons/LangSwitcher";
 interface DoctorNavProps {
     page?: string;
 }
@@ -66,6 +67,7 @@ class DoctorNav extends Component<DoctorNavProps, DoctorNavState, { main: boolea
     render() {
         return (
             <Accordion
+            disableGutters
                 ref={this.wrapperRef}
                 style={{ "backgroundColor": "rgba(52,52,52,0.0)", "padding": "0em" }}
                 sx={{ verticalAlign: 'top', top: "0px", width: 1, position: 'absolute', zIndex: 'modal' }}
@@ -112,6 +114,7 @@ class DoctorNav extends Component<DoctorNavProps, DoctorNavState, { main: boolea
                             justifyContent: 'flex-end',
                         }} >
                             <ChangePalette />
+                            <LangSwitcher  />
                         </Box>
                         <List sx={{ p: 1 }}>
                             <Avatar alt="Remy Sharp" src="/static/images/avatar/doctor.jpeg" />
